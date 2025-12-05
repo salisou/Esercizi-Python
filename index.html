@@ -1,0 +1,4070 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impara a programmare con Moussa - Esercizi Python</title>
+
+    <!-- Google Font più moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Pyodide for running Python in browser -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #e8e8e8;
+            background: radial-gradient(circle at top, #24243e, #302b63, #0f0c29);
+            min-height: 100vh;
+            padding-bottom: 40px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* HEADER MODERNO */
+        header {
+            background: rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 25px;
+            margin-bottom: 35px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            animation: float 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes float {
+            from {transform: translateY(0);}
+            to {transform: translateY(-8px);}
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #ffffff;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #cfcfff;
+            opacity: 0.9;
+        }
+
+        /* INTRO */
+        .intro {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 30px;
+            border-radius: 18px;
+            margin-bottom: 35px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+            color: #eeeeee;
+        }
+
+        .intro p {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        /* TITOLI SEZIONE */
+        .level-title {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+            padding: 18px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            text-align: left;
+            font-size: 1.9em;
+            color: white;
+            box-shadow: 0 7px 25px rgba(0,0,0,0.3);
+        }
+
+        /* EXERCISES */
+        .exercise {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(8px);
+            transition: 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+        }
+
+        .exercise:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 35px rgba(0,0,0,0.35);
+        }
+
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .exercise-number {
+            background: linear-gradient(135deg, #4a00e0, #8e2de2);
+            padding: 8px 15px;
+            font-weight: 600;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: white;
+        }
+
+        .exercise-title {
+            color: #b3aaff;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-left: 15px;
+            flex-grow: 1;
+        }
+
+        .solution-btn {
+            background: linear-gradient(135deg, #ff9966, #ff5e62);
+            padding: 10px 22px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: white;
+            transition: 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 94, 98, 0.4);
+        }
+
+        .solution-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 22px rgba(255, 94, 98, 0.5);
+        }
+
+        .exercise-description {
+            color: #e3e3e3;
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        /* CODE BOX */
+        .solution {
+            display: none;
+            background: rgba(255, 255, 255, 0.10);
+            border-left: 4px solid #8e2de2;
+            padding: 18px;
+            margin-top: 15px;
+            border-radius: 12px;
+            white-space: pre-wrap;
+            font-family: "Courier New", monospace;
+            color: #f0f0f0;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.25);
+        }
+
+        .solution.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        /* CTA */
+        .cta-section {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 45px;
+            border-radius: 22px;
+            text-align: center;
+            margin: 50px 0;
+            color: #ffffff;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 35px rgba(0,0,0,0.4);
+        }
+
+        .cta-section h2 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #d8d8d8;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 1200px) {
+            .container { padding: 15px; }
+            h1 { font-size: 2.5em; }
+            .level-title { font-size: 1.7em; padding: 15px; }
+            .exercise { padding: 20px; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            h1 { font-size: 2.2em; }
+            .subtitle { font-size: 1.1em; }
+            header { padding: 30px 20px; }
+            .intro { padding: 20px; }
+            .level-title { font-size: 1.5em; padding: 12px; }
+            .exercise { padding: 18px; margin-bottom: 20px; }
+            .exercise-header { flex-direction: column; align-items: flex-start; }
+            .exercise-number { font-size: 0.85em; padding: 6px 12px; }
+            .exercise-title { font-size: 1.2em; margin: 8px 0; }
+            .solution-btn { width: 100%; margin-top: 10px; padding: 8px 18px; font-size: 0.9em; }
+            .exercise-description { font-size: 0.95em; line-height: 1.6; }
+            .solution { padding: 15px; font-size: 0.9em; }
+            .cta-section { padding: 35px 20px; }
+            .cta-section h2 { font-size: 1.8em; }
+            footer { font-size: 0.9em; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 8px; }
+            h1 { font-size: 1.8em; }
+            .subtitle { font-size: 1em; }
+            header { padding: 25px 15px; }
+            .intro { padding: 15px; font-size: 0.95em; }
+            .level-title { font-size: 1.3em; padding: 10px; }
+            .exercise { padding: 15px; margin-bottom: 15px; }
+            .exercise-number { font-size: 0.8em; padding: 5px 10px; }
+            .exercise-title { font-size: 1.1em; margin: 6px 0; }
+            .solution-btn { padding: 7px 15px; font-size: 0.85em; }
+            .exercise-description { font-size: 0.9em; }
+            .solution { padding: 12px; font-size: 0.85em; }
+            .cta-section { padding: 25px 15px; }
+            .cta-section h2 { font-size: 1.5em; }
+            .cta-section p { font-size: 0.95em; }
+            footer { font-size: 0.85em; }
+        }
+
+        @media (max-width: 320px) {
+            h1 { font-size: 1.5em; }
+            .exercise-title { font-size: 1em; }
+            .solution-btn { font-size: 0.8em; }
+        }
+
+        /* SEARCH BAR */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            width: 60%;
+            max-width: 400px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px 0 0 25px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            color: #e8e8e8;
+            font-size: 1em;
+            outline: none;
+            transition: 0.3s ease;
+        }
+
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 10px rgba(142, 45, 226, 0.3);
+        }
+
+        .search-input::placeholder {
+            color: #b3aaff;
+        }
+
+        .search-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            background: linear-gradient(135deg, #ff9966, #ff5e62);
+            color: white;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 94, 98, 0.4);
+        }
+
+        /* LEVEL TABS */
+        .level-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .level-tab {
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            padding: 12px 25px;
+            margin: 0 8px;
+            border-radius: 25px;
+            cursor: pointer;
+            color: #e8e8e8;
+            font-size: 1em;
+            font-weight: 600;
+            transition: 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .level-tab:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .level-tab.active {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+            color: white;
+            box-shadow: 0 4px 15px rgba(142, 45, 226, 0.4);
+        }
+
+        .level-section {
+            display: none;
+        }
+
+        .level-section.active {
+            display: block;
+        }
+
+        .exercise.hidden {
+            display: none;
+        }
+
+        /* PAGINATION */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .page-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            color: #e8e8e8;
+            font-size: 1em;
+            font-weight: 600;
+            transition: 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .page-info {
+            color: #e8e8e8;
+            font-size: 1em;
+            font-weight: 600;
+            margin: 0 20px;
+        }
+
+        /* INTERACTIVE CODE EDITOR */
+        .code-editor {
+            position: relative;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            color: #f0f0f0;
+        }
+
+        .code-textarea {
+            width: 100%;
+            min-height: 150px;
+            background: transparent;
+            border: none;
+            color: #f0f0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            resize: vertical;
+            outline: none;
+            white-space: pre;
+            overflow-wrap: normal;
+            overflow-x: auto;
+        }
+
+        .code-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .code-btn {
+            background: linear-gradient(135deg, #4a00e0, #8e2de2);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        .code-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(142, 45, 226, 0.4);
+        }
+
+        .code-output {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            color: #00ff00;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .code-output.show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- HEADER -->
+        <header>
+            <h1>🐍 Impara a programmare con Moussa</h1>
+            <p class="subtitle">Esercizi di Programmazione Python</p>
+        </header>
+
+        <!-- INTRO -->
+        <div class="intro">
+            <p><strong>Il miglior modo per imparare Python velocemente è fare tanta pratica.</strong></p>
+            <p>Qui trovi esercizi svolti divisi per livello, con soluzioni visibili cliccando sul pulsante dedicato.</p>
+            <p><strong>Concentrati sulle basi: sono la chiave per diventare un programmatore esperto.</strong></p>
+            <p><strong>Happy Coding! 🚀</strong></p>
+        </div>
+
+        <!-- SEARCH BAR -->
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Cerca esercizi per titolo o descrizione..." class="search-input">
+            <button class="search-btn" onclick="clearSearch()">✕</button>
+        </div>
+
+        <!-- LEVEL TABS -->
+        <div class="level-tabs">
+            <button id="tab-principiante" class="level-tab active" onclick="showLevel('principiante')">📚 Principiante</button>
+            <button id="tab-intermedio" class="level-tab" onclick="showLevel('intermedio')">🖥️ Intermedio</button>
+            <button id="tab-oop" class="level-tab" onclick="showLevel('oop')">💼 OOP</button>
+            <button id="tab-data-analytics" class="level-tab" onclick="showLevel('data-analytics')">📊 Data Analytics</button>
+        </div>
+
+        <!-- LIVELLO PRINCIPIANTE -->
+        <div id="principiante" class="level-section active">
+            <h2 class="level-title">📚 Livello: Principiante</h2>
+
+            <!-- Esercizio 001 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 001</span>
+                    <span class="exercise-title">Max tra Due Numeri</span>
+                    <button class="solution-btn" onclick="toggleSolution(1)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che chieda due numeri all'utente tramite la funzione <code>input()</code> e poi stampi il maggiore dei due numeri.
+                    <br><strong>Obiettivo:</strong> imparare a utilizzare le istruzioni condizionali <code>if</code>, <code>elif</code> e <code>else</code>.
+                </div>
+                <div id="solution-1" class="solution">
+                    <pre># Programma che trova il numero maggiore
+num1 = int(input("Inserisci il primo numero: "))
+num2 = int(input("Inserisci il secondo numero: "))
+if num1 > num2:
+    print(f"Il numero maggiore è {num1}")
+elif num2 > num1:
+    print(f"Il numero maggiore è {num2}")
+else:
+    print("I numeri sono uguali.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 002 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 002</span>
+                    <span class="exercise-title">Pari o Dispari</span>
+                    <button class="solution-btn" onclick="toggleSolution(2)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che chieda all'utente di inserire un numero. Il programma deve determinare se il numero è pari o dispari e stamparlo a video.
+                    <br><strong>Obiettivo:</strong> imparare a lavorare con l'operatore modulo <code>%</code>.
+                </div>
+                <div id="solution-2" class="solution">
+                    <pre># Programma che determina se un numero è pari o dispari
+numero = int(input("Inserisci un numero: "))
+if numero % 2 == 0:
+    print("Il numero è pari.")
+else:
+    print("Il numero è dispari.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 003 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 003</span>
+                    <span class="exercise-title">Somma dei Numeri da 1 a N</span>
+                    <button class="solution-btn" onclick="toggleSolution(3)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli la somma di tutti i numeri da 1 a un numero intero inserito dall'utente.
+                    <br><strong>Obiettivo:</strong> imparare ad utilizzare i cicli <code>for</code> e la funzione <code>sum()</code>.
+                </div>
+                <div id="solution-3" class="solution">
+                    <pre># Programma che calcola la somma da 1 a N
+n = int(input("Inserisci un numero: "))
+somma = sum(range(1, n + 1))
+print(f"La somma dei numeri da 1 a {n} è {somma}.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 007 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 007</span>
+                    <span class="exercise-title">Calcola l'Età</span>
+                    <button class="solution-btn" onclick="toggleSolution(7)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che chieda all'utente il suo anno di nascita e calcoli la sua età attuale (assumendo l'anno corrente sia 2023).
+                    <br><strong>Obiettivo:</strong> praticare l'input dell'utente e le operazioni aritmetiche di base.
+                </div>
+                <div id="solution-7" class="solution">
+                    <pre># Programma che calcola l'età
+anno_corrente = 2023
+anno_nascita = int(input("Inserisci il tuo anno di nascita: "))
+eta = anno_corrente - anno_nascita
+print(f"La tua età è {eta} anni.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 010 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 010</span>
+                    <span class="exercise-title">Convert Celsius to Fahrenheit</span>
+                    <button class="solution-btn" onclick="toggleSolution(10)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che converta una temperatura da Celsius a Fahrenheit.
+                    <br><strong>Obiettivo:</strong> praticare operazioni aritmetiche e input/output.
+                </div>
+                <div id="solution-10" class="solution">
+                    <pre># Programma che converte Celsius a Fahrenheit
+celsius = float(input("Inserisci la temperatura in Celsius: "))
+fahrenheit = (celsius * 9/5) + 32
+print(f"{celsius}°C corrisponde a {fahrenheit}°F") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 011 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 011</span>
+                    <span class="exercise-title">Check if a Number is Prime</span>
+                    <button class="solution-btn" onclick="toggleSolution(11)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che determini se un numero inserito dall'utente è primo.
+                    <br><strong>Obiettivo:</strong> imparare a lavorare con cicli e condizioni.
+                </div>
+                <div id="solution-11" class="solution">
+                    <pre># Programma che verifica se un numero è primo
+n = int(input("Inserisci un numero: "))
+if n > 1:
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            print("Il numero non è primo.")
+            break
+    else:
+        print("Il numero è primo.")
+else:
+    print("Il numero non è primo.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 012 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 012</span>
+                    <span class="exercise-title">Count Vowels in a String</span>
+                    <button class="solution-btn" onclick="toggleSolution(12)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che conti il numero di vocali in una stringa inserita dall'utente.
+                    <br><strong>Obiettivo:</strong> lavorare con stringhe e cicli.
+                </div>
+                <div id="solution-12" class="solution">
+                    <pre># Programma che conta le vocali in una stringa
+stringa = input("Inserisci una stringa: ").lower()
+vocali = "aeiou"
+conteggio = 0
+for char in stringa:
+    if char in vocali:
+        conteggio += 1
+print(f"Il numero di vocali è {conteggio}.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 013 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 013</span>
+                    <span class="exercise-title">Find the Largest in a List</span>
+                    <button class="solution-btn" onclick="toggleSolution(13)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che trovi il numero più grande in una lista di numeri inseriti dall'utente.
+                    <br><strong>Obiettivo:</strong> lavorare con liste e cicli.
+                </div>
+                <div id="solution-13" class="solution">
+                    <pre># Programma che trova il numero più grande in una lista
+numeri = list(map(int, input("Inserisci numeri separati da spazio: ").split()))
+massimo = max(numeri)
+print(f"Il numero più grande è {massimo}.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 014 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 014</span>
+                    <span class="exercise-title">Reverse a String</span>
+                    <button class="solution-btn" onclick="toggleSolution(14)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che inverta una stringa inserita dall'utente.
+                    <br><strong>Obiettivo:</strong> manipolare stringhe.
+                </div>
+                <div id="solution-14" class="solution">
+                    <pre># Programma che inverte una stringa
+stringa = input("Inserisci una stringa: ")
+invertita = stringa[::-1]
+print(f"La stringa invertita è {invertita}.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 015 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 015</span>
+                    <span class="exercise-title">Sum of Even Numbers from 1 to N</span>
+                    <button class="solution-btn" onclick="toggleSolution(15)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli la somma dei numeri pari da 1 a N.
+                    <br><strong>Obiettivo:</strong> utilizzare cicli e condizioni.
+                </div>
+                <div id="solution-15" class="solution">
+                    <pre># Programma che somma i numeri pari da 1 a N
+n = int(input("Inserisci N: "))
+somma = 0
+for i in range(2, n+1, 2):
+    somma += i
+print(f"La somma dei numeri pari da 1 a {n} è {somma}.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 016 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 016</span>
+                    <span class="exercise-title">Simple Calculator</span>
+                    <button class="solution-btn" onclick="toggleSolution(16)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che funga da calcolatrice semplice per addizione, sottrazione, moltiplicazione e divisione.
+                    <br><strong>Obiettivo:</strong> utilizzare condizioni e operazioni.
+                </div>
+                <div id="solution-16" class="solution">
+                    <pre># Calcolatrice semplice
+a = float(input("Inserisci il primo numero: "))
+b = float(input("Inserisci il secondo numero: "))
+operazione = input("Inserisci l'operazione (+, -, *, /): ")
+if operazione == '+':
+    print(f"Risultato: {a + b}")
+elif operazione == '-':
+    print(f"Risultato: {a - b}")
+elif operazione == '*':
+    print(f"Risultato: {a * b}")
+elif operazione == '/':
+    if b != 0:
+        print(f"Risultato: {a / b}")
+    else:
+        print("Errore: divisione per zero.")
+else:
+    print("Operazione non valida.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 017 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 017</span>
+                    <span class="exercise-title">Guess the Number Game</span>
+                    <button class="solution-btn" onclick="toggleSolution(17)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che generi un numero casuale e chieda all'utente di indovinarlo.
+                    <br><strong>Obiettivo:</strong> utilizzare il modulo random e cicli.
+                </div>
+                <div id="solution-17" class="solution">
+                    <pre># Gioco indovina il numero
+import random
+numero = random.randint(1, 100)
+tentativo = 0
+while tentativo != numero:
+    tentativo = int(input("Indovina il numero (1-100): "))
+    if tentativo < numero:
+        print("Troppo basso!")
+    elif tentativo > numero:
+        print("Troppo alto!")
+print("Hai indovinato!") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 018 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 018</span>
+                    <span class="exercise-title">Print a Pyramid of Stars</span>
+                    <button class="solution-btn" onclick="toggleSolution(18)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che stampi una piramide di stelle basata su un numero di righe inserito dall'utente.
+                    <br><strong>Obiettivo:</strong> utilizzare cicli annidati.
+                </div>
+                <div id="solution-18" class="solution">
+                    <pre># Programma che stampa una piramide di stelle
+righe = int(input("Inserisci il numero di righe: "))
+for i in range(1, righe + 1):
+    spazi = ' ' * (righe - i)
+    stelle = '*' * (2 * i - 1)
+    print(spazi + stelle) </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 019 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 019</span>
+                    <span class="exercise-title">Check if a String is Palindrome</span>
+                    <button class="solution-btn" onclick="toggleSolution(19)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che verifichi se una stringa è un palindromo.
+                    <br><strong>Obiettivo:</strong> manipolare stringhe e confrontare.
+                </div>
+                <div id="solution-19" class="solution">
+                    <pre># Programma che verifica se una stringa è palindromo
+stringa = input("Inserisci una stringa: ").lower().replace(" ", "")
+if stringa == stringa[::-1]:
+    print("La stringa è un palindromo.")
+else:
+    print("La stringa non è un palindromo.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 020 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 020</span>
+                    <span class="exercise-title">Max tra Due Numeri - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(20)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che chieda due numeri all'utente tramite la funzione <code>input()</code> e poi stampi il maggiore dei due numeri. Usa una funzione personalizzata.
+                    <br><strong>Obiettivo:</strong> imparare a utilizzare le istruzioni condizionali e funzioni.
+                </div>
+                <div id="solution-20" class="solution">
+                    <pre>def trova_massimo(a, b):
+    if a > b:
+        return a
+    elif b > a:
+        return b
+    else:
+        return "Uguali"
+
+num1 = int(input("Inserisci il primo numero: "))
+num2 = int(input("Inserisci il secondo numero: "))
+print(f"Il numero maggiore è {trova_massimo(num1, num2)}") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 021 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 021</span>
+                    <span class="exercise-title">Pari o Dispari - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(21)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che chieda all'utente di inserire un numero. Il programma deve determinare se il numero è pari o dispari usando una funzione.
+                    <br><strong>Obiettivo:</strong> imparare a lavorare con l'operatore modulo e funzioni.
+                </div>
+                <div id="solution-21" class="solution">
+                    <pre>def is_pari(n):
+    return n % 2 == 0
+
+numero = int(input("Inserisci un numero: "))
+if is_pari(numero):
+    print("Il numero è pari.")
+else:
+    print("Il numero è dispari.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 022 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 022</span>
+                    <span class="exercise-title">Somma dei Numeri da 1 a N - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(22)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli la somma di tutti i numeri da 1 a un numero intero inserito dall'utente usando un ciclo while.
+                    <br><strong>Obiettivo:</strong> imparare ad utilizzare i cicli while.
+                </div>
+                <div id="solution-22" class="solution">
+                    <pre>n = int(input("Inserisci un numero: "))
+somma = 0
+i = 1
+while i <= n:
+    somma += i
+    i += 1
+print(f"La somma dei numeri da 1 a {n} è {somma}.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 023 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 023</span>
+                    <span class="exercise-title">Calcola l'Età - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(23)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che chieda all'utente il suo anno di nascita e calcoli la sua età attuale usando l'anno corrente dinamico.
+                    <br><strong>Obiettivo:</strong> praticare l'input dell'utente e operazioni aritmetiche con datetime.
+                </div>
+                <div id="solution-23" class="solution">
+                    <pre>from datetime import datetime
+anno_corrente = datetime.now().year
+anno_nascita = int(input("Inserisci il tuo anno di nascita: "))
+eta = anno_corrente - anno_nascita
+print(f"La tua età è {eta} anni.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 024 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 024</span>
+                    <span class="exercise-title">Convert Celsius to Fahrenheit - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(24)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che converta una temperatura da Celsius a Fahrenheit e viceversa.
+                    <br><strong>Obiettivo:</strong> praticare operazioni aritmetiche e input/output.
+                </div>
+                <div id="solution-24" class="solution">
+                    <pre>celsius = float(input("Inserisci la temperatura in Celsius: "))
+fahrenheit = (celsius * 9/5) + 32
+print(f"{celsius}°C corrisponde a {fahrenheit}°F")
+fahrenheit_input = float(input("Inserisci la temperatura in Fahrenheit: "))
+celsius_output = (fahrenheit_input - 32) * 5/9
+print(f"{fahrenheit_input}°F corrisponde a {celsius_output}°C") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 025 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 025</span>
+                    <span class="exercise-title">Check if a Number is Prime - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(25)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che determini se un numero inserito dall'utente è primo usando una funzione.
+                    <br><strong>Obiettivo:</strong> imparare a lavorare con cicli e condizioni in funzioni.
+                </div>
+                <div id="solution-25" class="solution">
+                    <pre>def is_primo(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+n = int(input("Inserisci un numero: "))
+if is_primo(n):
+    print("Il numero è primo.")
+else:
+    print("Il numero non è primo.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 026 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 026</span>
+                    <span class="exercise-title">Count Vowels in a String - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(26)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che conti il numero di vocali in una stringa inserita dall'utente usando una funzione.
+                    <br><strong>Obiettivo:</strong> lavorare con stringhe e cicli in funzioni.
+                </div>
+                <div id="solution-26" class="solution">
+                    <pre>def conta_vocali(stringa):
+    vocali = "aeiouAEIOU"
+    conteggio = 0
+    for char in stringa:
+        if char in vocali:
+            conteggio += 1
+    return conteggio
+
+stringa = input("Inserisci una stringa: ")
+print(f"Il numero di vocali è {conta_vocali(stringa)}.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 027 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 027</span>
+                    <span class="exercise-title">Find the Largest in a List - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(27)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che trovi il numero più grande in una lista di numeri inseriti dall'utente usando una funzione.
+                    <br><strong>Obiettivo:</strong> lavorare con liste e cicli in funzioni.
+                </div>
+                <div id="solution-27" class="solution">
+                    <pre>def trova_massimo_lista(numeri):
+    if not numeri:
+        return None
+    massimo = numeri[0]
+    for num in numeri:
+        if num > massimo:
+            massimo = num
+    return massimo
+
+numeri = list(map(int, input("Inserisci numeri separati da spazio: ").split()))
+massimo = trova_massimo_lista(numeri)
+print(f"Il numero più grande è {massimo}.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 028 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 028</span>
+                    <span class="exercise-title">Reverse a String - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(28)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che inverta una stringa inserita dall'utente usando una funzione.
+                    <br><strong>Obiettivo:</strong> manipolare stringhe in funzioni.
+                </div>
+                <div id="solution-28" class="solution">
+                    <pre>def inverti_stringa(stringa):
+    return stringa[::-1]
+
+stringa = input("Inserisci una stringa: ")
+invertita = inverti_stringa(stringa)
+print(f"La stringa invertita è {invertita}.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 029 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 029</span>
+                    <span class="exercise-title">Sum of Even Numbers from 1 to N - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(29)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli la somma dei numeri pari da 1 a N usando una funzione.
+                    <br><strong>Obiettivo:</strong> utilizzare cicli e condizioni in funzioni.
+                </div>
+                <div id="solution-29" class="solution">
+                    <pre>def somma_pari(n):
+    somma = 0
+    for i in range(2, n+1, 2):
+        somma += i
+    return somma
+
+n = int(input("Inserisci N: "))
+print(f"La somma dei numeri pari da 1 a {n} è {somma_pari(n)}.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 030 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 030</span>
+                    <span class="exercise-title">Simple Calculator - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(30)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che funga da calcolatrice semplice per addizione, sottrazione, moltiplicazione e divisione usando funzioni.
+                    <br><strong>Obiettivo:</strong> utilizzare condizioni e operazioni in funzioni.
+                </div>
+                <div id="solution-30" class="solution">
+                    <pre>def calcola(a, b, operazione):
+    if operazione == '+':
+        return a + b
+    elif operazione == '-':
+        return a - b
+    elif operazione == '*':
+        return a * b
+    elif operazione == '/':
+        if b != 0:
+            return a / b
+        else:
+            return "Errore: divisione per zero."
+    else:
+        return "Operazione non valida."
+
+a = float(input("Inserisci il primo numero: "))
+b = float(input("Inserisci il secondo numero: "))
+operazione = input("Inserisci l'operazione (+, -, *, /): ")
+risultato = calcola(a, b, operazione)
+print(f"Risultato: {risultato}") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 031 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 031</span>
+                    <span class="exercise-title">Guess the Number Game - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(31)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che generi un numero casuale e chieda all'utente di indovinarlo con un limite di tentativi.
+                    <br><strong>Obiettivo:</strong> utilizzare il modulo random e cicli con limite.
+                </div>
+                <div id="solution-31" class="solution">
+                    <pre>import random
+numero = random.randint(1, 100)
+tentativi_max = 10
+tentativo = 0
+while tentativo < tentativi_max:
+    tentativo += 1
+    guess = int(input(f"Tentativo {tentativo}/{tentativi_max}: Indovina il numero (1-100): "))
+    if guess < numero:
+        print("Troppo basso!")
+    elif guess > numero:
+        print("Troppo alto!")
+    else:
+        print(f"Hai indovinato in {tentativo} tentativi!")
+        break
+else:
+    print(f"Hai esaurito i tentativi. Il numero era {numero}.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 032 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 032</span>
+                    <span class="exercise-title">Print a Pyramid of Stars - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(32)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che stampi una piramide di stelle basata su un numero di righe inserito dall'utente usando una funzione.
+                    <br><strong>Obiettivo:</strong> utilizzare cicli annidati in funzioni.
+                </div>
+                <div id="solution-32" class="solution">
+                    <pre>def piramide_stelle(righe):
+    for i in range(1, righe + 1):
+        spazi = ' ' * (righe - i)
+        stelle = '*' * (2 * i - 1)
+        print(spazi + stelle)
+
+righe = int(input("Inserisci il numero di righe: "))
+piramide_stelle(righe) </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 033 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 033</span>
+                    <span class="exercise-title">Check if a String is Palindrome - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(33)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che verifichi se una stringa è un palindromo usando una funzione.
+                    <br><strong>Obiettivo:</strong> manipolare stringhe e confrontare in funzioni.
+                </div>
+                <div id="solution-33" class="solution">
+                    <pre>def is_palindromo(stringa):
+    stringa = stringa.lower().replace(" ", "")
+    return stringa == stringa[::-1]
+
+stringa = input("Inserisci una stringa: ")
+if is_palindromo(stringa):
+    print("La stringa è un palindromo.")
+else:
+    print("La stringa non è un palindromo.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 058 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 058</span>
+                    <span class="exercise-title">Calculate Area of a Triangle</span>
+                    <button class="solution-btn" onclick="toggleSolution(58)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli l'area di un triangolo dati base e altezza inseriti dall'utente.
+                    <br><strong>Obiettivo:</strong> imparare a lavorare con input dell'utente e operazioni aritmetiche di base.
+                </div>
+                <div id="solution-58" class="solution">
+                    <pre># Programma che calcola l'area di un triangolo
+base = float(input("Inserisci la base del triangolo: "))
+altezza = float(input("Inserisci l'altezza del triangolo: "))
+area = (base * altezza) / 2
+print(f"L'area del triangolo è {area}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 060 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 060</span>
+                    <span class="exercise-title">Calculate Simple Interest</span>
+                    <button class="solution-btn" onclick="toggleSolution(60)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli l'interesse semplice dati capitale, tasso percentuale e tempo in anni inseriti dall'utente.
+                    <br><strong>Obiettivo:</strong> praticare operazioni aritmetiche e conversioni.
+                </div>
+                <div id="solution-60" class="solution">
+                    <pre># Programma che calcola l'interesse semplice
+capitale = float(input("Inserisci il capitale: "))
+tasso = float(input("Inserisci il tasso (%): ")) / 100
+tempo = float(input("Inserisci il tempo (anni): "))
+interesse = capitale * tasso * tempo
+print(f"L'interesse semplice è {interesse}")</pre>
+                </div>
+            </div>
+
+            <!-- Continue adding more exercises to reach 100... -->
+            <!-- For brevity, I'll add a few more and then implement pagination -->
+
+            <!-- Esercizio 034 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 034</span>
+                    <span class="exercise-title">Max tra Due Numeri - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(34)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che chieda due numeri all'utente e stampi il maggiore usando l'operatore ternario.
+                    <br><strong>Obiettivo:</strong> imparare l'operatore ternario.
+                </div>
+                <div id="solution-34" class="solution">
+                    <pre>num1 = int(input("Inserisci il primo numero: "))
+num2 = int(input("Inserisci il secondo numero: "))
+massimo = num1 if num1 > num2 else num2
+print(f"Il numero maggiore è {massimo}") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 035 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 035</span>
+                    <span class="exercise-title">Pari o Dispari - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(35)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che chieda un numero e determini se è pari o dispari usando una sola linea.
+                    <br><strong>Obiettivo:</strong> scrivere codice conciso.
+                </div>
+                <div id="solution-35" class="solution">
+                    <pre>numero = int(input("Inserisci un numero: "))
+print("Pari" if numero % 2 == 0 else "Dispari") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 036 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 036</span>
+                    <span class="exercise-title">Somma dei Numeri da 1 a N - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(36)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Calcola la somma da 1 a N usando la formula matematica n*(n+1)/2.
+                    <br><strong>Obiettivo:</strong> usare formule matematiche efficienti.
+                </div>
+                <div id="solution-36" class="solution">
+                    <pre>n = int(input("Inserisci un numero: "))
+somma = n * (n + 1) // 2
+print(f"La somma dei numeri da 1 a {n} è {somma}.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 037 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 037</span>
+                    <span class="exercise-title">Calcola l'Età - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(37)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Chiedi anno di nascita e mese, e calcola età approssimata considerando il mese corrente.
+                    <br><strong>Obiettivo:</strong> lavorare con date più precise.
+                </div>
+                <div id="solution-37" class="solution">
+                    <pre>from datetime import datetime
+ora = datetime.now()
+anno_corrente = ora.year
+mese_corrente = ora.month
+
+anno_nascita = int(input("Inserisci il tuo anno di nascita: "))
+mese_nascita = int(input("Inserisci il tuo mese di nascita (1-12): "))
+
+eta = anno_corrente - anno_nascita
+if mese_corrente < mese_nascita:
+    eta -= 1
+
+print(f"La tua età è circa {eta} anni.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 038 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 038</span>
+                    <span class="exercise-title">Convert Celsius to Fahrenheit - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(38)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Converti temperature in un ciclo, chiedendo all'utente quante conversioni fare.
+                    <br><strong>Obiettivo:</strong> combinare input e cicli.
+                </div>
+                <div id="solution-38" class="solution">
+                    <pre>n = int(input("Quante temperature vuoi convertire? "))
+for i in range(n):
+    celsius = float(input(f"Temperatura {i+1} in Celsius: "))
+    fahrenheit = (celsius * 9/5) + 32
+    print(f"{celsius}°C = {fahrenheit}°F") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 039 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 039</span>
+                    <span class="exercise-title">Check if a Number is Prime - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(39)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Trova tutti i numeri primi fino a un numero N inserito dall'utente.
+                    <br><strong>Obiettivo:</strong> generare liste di numeri primi.
+                </div>
+                <div id="solution-39" class="solution">
+                    <pre>def trova_primi(n):
+    primi = []
+    for num in range(2, n+1):
+        is_primo = True
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                is_primo = False
+                break
+        if is_primo:
+            primi.append(num)
+    return primi
+
+n = int(input("Inserisci un numero: "))
+primi = trova_primi(n)
+print(f" Numeri primi fino a {n}: {primi}") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 040 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 040</span>
+                    <span class="exercise-title">Count Vowels in a String - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(40)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Conta vocali e consonanti in una stringa.
+                    <br><strong>Obiettivo:</strong> analizzare stringhe più dettagliatamente.
+                </div>
+                <div id="solution-40" class="solution">
+                    <pre>stringa = input("Inserisci una stringa: ").lower()
+vocali = "aeiou"
+conteggio_vocali = 0
+conteggio_consonanti = 0
+
+for char in stringa:
+    if char.isalpha():
+        if char in vocali:
+            conteggio_vocali += 1
+        else:
+            conteggio_consonanti += 1
+
+print(f"Vocali: {conteggio_vocali}, Consonanti: {conteggio_consonanti}") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 041 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 041</span>
+                    <span class="exercise-title">Find the Largest in a List - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(41)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Trova il massimo e il minimo in una lista.
+                    <br><strong>Obiettivo:</strong> lavorare con più statistiche di base.
+                </div>
+                <div id="solution-41" class="solution">
+                    <pre>numeri = list(map(int, input("Inserisci numeri separati da spazio: ").split()))
+if numeri:
+    massimo = max(numeri)
+    minimo = min(numeri)
+    print(f"Massimo: {massimo}, Minimo: {minimo}")
+else:
+    print("Lista vuota") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 042 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 042</span>
+                    <span class="exercise-title">Reverse a String - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(42)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Inverti una stringa parola per parola.
+                    <br><strong>Obiettivo:</strong> manipolare stringhe a livello di parole.
+                </div>
+                <div id="solution-42" class="solution">
+                    <pre>stringa = input("Inserisci una stringa: ")
+parole = stringa.split()
+parole_invertite = parole[::-1]
+stringa_invertita = ' '.join(parole_invertite)
+print(f"Stringa invertita: {stringa_invertita}") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 043 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 043</span>
+                    <span class="exercise-title">Sum of Even Numbers from 1 to N - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(43)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Somma numeri pari e dispari separatamente da 1 a N.
+                    <br><strong>Obiettivo:</strong> calcolare somme separate.
+                </div>
+                <div id="solution-43" class="solution">
+                    <pre>n = int(input("Inserisci N: "))
+somma_pari = 0
+somma_dispari = 0
+for i in range(1, n+1):
+    if i % 2 == 0:
+        somma_pari += i
+    else:
+        somma_dispari += i
+print(f"Somma pari: {somma_pari}, Somma dispari: {somma_dispari}") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 044 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 044</span>
+                    <span class="exercise-title">Simple Calculator - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(44)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Calcolatrice con menu a scelta multipla.
+                    <br><strong>Obiettivo:</strong> creare interfacce utente testuali.
+                </div>
+                <div id="solution-44" class="solution">
+                    <pre>def menu():
+    print("1. Addizione")
+    print("2. Sottrazione")
+    print("3. Moltiplicazione")
+    print("4. Divisione")
+    return int(input("Scegli un'operazione (1-4): "))
+
+a = float(input("Inserisci il primo numero: "))
+b = float(input("Inserisci il secondo numero: "))
+scelta = menu()
+
+if scelta == 1:
+    print(f"Risultato: {a + b}")
+elif scelta == 2:
+    print(f"Risultato: {a - b}")
+elif scelta == 3:
+    print(f"Risultato: {a * b}")
+elif scelta == 4:
+    if b != 0:
+        print(f"Risultato: {a / b}")
+    else:
+        print("Errore: divisione per zero.")
+else:
+    print("Scelta non valida.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 045 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 045</span>
+                    <span class="exercise-title">Guess the Number Game - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(45)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Gioco dell'indovinello con suggerimenti più dettagliati.
+                    <br><strong>Obiettivo:</strong> migliorare l'interazione utente.
+                </div>
+                <div id="solution-45" class="solution">
+                    <pre>import random
+numero = random.randint(1, 100)
+tentativo = 0
+while True:
+    tentativo += 1
+    guess = int(input("Indovina il numero (1-100): "))
+    differenza = abs(guess - numero)
+    if guess == numero:
+        print(f"Corretto! Hai indovinato in {tentativo} tentativi.")
+        break
+    elif differenza <= 5:
+        print("Molto vicino!")
+    elif differenza <= 15:
+        print("Vicino")
+    else:
+        print("Lontano")
+    if guess < numero:
+        print("Troppo basso")
+    else:
+        print("Troppo alto") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 046 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 046</span>
+                    <span class="exercise-title">Print a Pyramid of Stars - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(46)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Stampa una piramide con caratteri personalizzati.
+                    <br><strong>Obiettivo:</strong> personalizzare l'output.
+                </div>
+                <div id="solution-46" class="solution">
+                    <pre>carattere = input("Inserisci un carattere: ")
+righe = int(input("Inserisci il numero di righe: "))
+for i in range(1, righe + 1):
+    spazi = ' ' * (righe - i)
+    caratteri = carattere * (2 * i - 1)
+    print(spazi + caratteri) </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 047 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 047</span>
+                    <span class="exercise-title">Check if a String is Palindrome - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(47)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Verifica se una frase è palindroma ignorando punteggiatura.
+                    <br><strong>Obiettivo:</strong> gestire stringhe più complesse.
+                </div>
+                <div id="solution-47" class="solution">
+                    <pre>import re
+stringa = input("Inserisci una frase: ").lower()
+stringa_pulita = re.sub(r'[^a-zA-Z]', '', stringa)
+if stringa_pulita == stringa_pulita[::-1]:
+    print("La frase è un palindromo.")
+else:
+    print("La frase non è un palindromo.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 048 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 048</span>
+                    <span class="exercise-title">Calculate Area of Circle</span>
+                    <button class="solution-btn" onclick="toggleSolution(48)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli l'area di un cerchio dato il raggio inserito dall'utente.
+                    <br><strong>Obiettivo:</strong> utilizzare il modulo math per pi e operazioni aritmetiche.
+                </div>
+                <div id="solution-48" class="solution">
+                    <pre>import math
+raggio = float(input("Inserisci il raggio del cerchio: "))
+area = math.pi * raggio ** 2
+print(f"L'area del cerchio è {area:.2f}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 049 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 049</span>
+                    <span class="exercise-title">Calculate Perimeter of Rectangle</span>
+                    <button class="solution-btn" onclick="toggleSolution(49)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli il perimetro di un rettangolo dati lunghezza e larghezza.
+                    <br><strong>Obiettivo:</strong> praticare input multipli e calcolo semplice.
+                </div>
+                <div id="solution-49" class="solution">
+                    <pre>lunghezza = float(input("Inserisci la lunghezza: "))
+larghezza = float(input("Inserisci la larghezza: "))
+perimetro = 2 * (lunghezza + larghezza)
+print(f"Il perimetro del rettangolo è {perimetro}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 050 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 050</span>
+                    <span class="exercise-title">Check if Year is Leap</span>
+                    <button class="solution-btn" onclick="toggleSolution(50)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che determini se un anno inserito dall'utente è bisestile.
+                    <br><strong>Obiettivo:</strong> utilizzare condizioni logiche complesse.
+                </div>
+                <div id="solution-50" class="solution">
+                    <pre>anno = int(input("Inserisci un anno: "))
+if (anno % 4 == 0 and anno % 100 != 0) or (anno % 400 == 0):
+    print("L'anno è bisestile.")
+else:
+    print("L'anno non è bisestile.")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 051 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 051</span>
+                    <span class="exercise-title">Factorial - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(51)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli il fattoriale di un numero usando la ricorsione.
+                    <br><strong>Obiettivo:</strong> imparare funzioni ricorsive.
+                </div>
+                <div id="solution-51" class="solution">
+                    <pre>def fattoriale(n):
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return n * fattoriale(n - 1)
+
+n = int(input("Inserisci un numero: "))
+print(f"Il fattoriale di {n} è {fattoriale(n)}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 052 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 052</span>
+                    <span class="exercise-title">Fibonacci - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(52)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che generi l'n-esimo numero della serie di Fibonacci usando ricorsione.
+                    <br><strong>Obiettivo:</strong> lavorare con ricorsione.
+                </div>
+                <div id="solution-52" class="solution">
+                    <pre>def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+
+n = int(input("Inserisci n: "))
+print(f"Il {n}-esimo numero di Fibonacci è {fibonacci(n)}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 053 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 053</span>
+                    <span class="exercise-title">Bubble Sort - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(53)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Implementa Bubble Sort usando una funzione e conta gli scambi.
+                    <br><strong>Obiettivo:</strong> algoritmi di ordinamento con contatori.
+                </div>
+                <div id="solution-53" class="solution">
+                    <pre>def bubble_sort(arr):
+    n = len(arr)
+    scambi = 0
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+                scambi += 1
+    return arr, scambi
+
+numeri = list(map(int, input("Inserisci numeri separati da spazio: ").split()))
+ordinati, scambi = bubble_sort(numeri)
+print("Lista ordinata:", ordinati)
+print("Scambi effettuati:", scambi)</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 054 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 054</span>
+                    <span class="exercise-title">Binary Search - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(54)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Implementa Binary Search in modo iterativo.
+                    <br><strong>Obiettivo:</strong> ricerca iterativa.
+                </div>
+                <div id="solution-54" class="solution">
+                    <pre>def binary_search(arr, x):
+    low = 0
+    high = len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] < x:
+            low = mid + 1
+        elif arr[mid] > x:
+            high = mid - 1
+        else:
+            return mid
+    return -1
+
+arr = [1, 3, 5, 7, 9]
+x = int(input("Inserisci il numero da cercare: "))
+result = binary_search(arr, x)
+if result != -1:
+    print(f"Elemento trovato all'indice {result}")
+else:
+    print("Elemento non trovato")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 055 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 055</span>
+                    <span class="exercise-title">Matrix Addition - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(55)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Somma due matrici inserite dall'utente.
+                    <br><strong>Obiettivo:</strong> lavorare con matrici e input.
+                </div>
+                <div id="solution-55" class="solution">
+                    <pre>def somma_matrici(A, B):
+    result = [[A[i][j] + B[i][j] for j in range(len(A[0]))] for i in range(len(A))]
+    return result
+
+# Matrici di esempio
+A = [[1, 2], [3, 4]]
+B = [[5, 6], [7, 8]]
+risultato = somma_matrici(A, B)
+print("Somma delle matrici:", risultato)</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 056 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 056</span>
+                    <span class="exercise-title">Read from File - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(56)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Leggi un file e conta il numero di parole.
+                    <br><strong>Obiettivo:</strong> lavorare con file e stringhe.
+                </div>
+                <div id="solution-56" class="solution">
+                    <pre>try:
+    with open('file.txt', 'r') as file:
+        content = file.read()
+        parole = content.split()
+        print(f"Il file contiene {len(parole)} parole.")
+except FileNotFoundError:
+    print("File non trovato.")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 057 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 057</span>
+                    <span class="exercise-title">Exception Handling - Variante 2</span>
+                    <button class="solution-btn" onclick="toggleSolution(57)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Gestisci eccezioni per input non valido e divisione per zero.
+                    <br><strong>Obiettivo:</strong> gestione errori avanzata.
+                </div>
+                <div id="solution-57" class="solution">
+                    <pre>try:
+    num1 = float(input("Inserisci il primo numero: "))
+    num2 = float(input("Inserisci il secondo numero: "))
+    risultato = num1 / num2
+    print(f"Risultato: {risultato}")
+except ZeroDivisionError:
+    print("Errore: divisione per zero.")
+except ValueError:
+    print("Errore: input non valido.")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 081 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 081</span>
+                    <span class="exercise-title">Check if a String is a Pangram</span>
+                    <button class="solution-btn" onclick="toggleSolution(81)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che verifichi se una stringa è un pangramma (contiene tutte le lettere dell'alfabeto).
+                    <br><strong>Obiettivo:</strong> lavorare con insiemi e stringhe.
+                </div>
+                <div id="solution-81" class="solution">
+                    <pre>stringa = input("Inserisci una stringa: ").lower()
+alfabeto = set('abcdefghijklmnopqrstuvwxyz')
+lettere_presenti = set(stringa)
+if alfabeto.issubset(lettere_presenti):
+    print("La stringa è un pangramma.")
+else:
+    print("La stringa non è un pangramma.")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 082 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 082</span>
+                    <span class="exercise-title">Calculate Area of a Rectangle</span>
+                    <button class="solution-btn" onclick="toggleSolution(82)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli l'area di un rettangolo dati lunghezza e larghezza.
+                    <br><strong>Obiettivo:</strong> praticare input e moltiplicazione.
+                </div>
+                <div id="solution-82" class="solution">
+                    <pre>lunghezza = float(input("Inserisci la lunghezza: "))
+larghezza = float(input("Inserisci la larghezza: "))
+area = lunghezza * larghezza
+print(f"L'area del rettangolo è {area}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 083 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 083</span>
+                    <span class="exercise-title">Find the Second Largest Number in a List</span>
+                    <button class="solution-btn" onclick="toggleSolution(83)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che trovi il secondo numero più grande in una lista.
+                    <br><strong>Obiettivo:</strong> lavorare con liste e ordinamento.
+                </div>
+                <div id="solution-83" class="solution">
+                    <pre>numeri = list(map(int, input("Inserisci numeri separati da spazio: ").split()))
+if len(numeri) >= 2:
+    numeri.sort()
+    secondo_massimo = numeri[-2]
+    print(f"Il secondo numero più grande è {secondo_massimo}.")
+else:
+    print("Inserisci almeno due numeri.")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 084 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 084</span>
+                    <span class="exercise-title">Remove Duplicates from a List</span>
+                    <button class="solution-btn" onclick="toggleSolution(84)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che rimuova i duplicati da una lista mantenendo l'ordine.
+                    <br><strong>Obiettivo:</strong> lavorare con liste e insiemi.
+                </div>
+                <div id="solution-84" class="solution">
+                    <pre>numeri = list(map(int, input("Inserisci numeri separati da spazio: ").split()))
+unici = []
+for num in numeri:
+    if num not in unici:
+        unici.append(num)
+print("Lista senza duplicati:", unici)</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 085 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 085</span>
+                    <span class="exercise-title">Check if a Number is a Palindrome</span>
+                    <button class="solution-btn" onclick="toggleSolution(85)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che verifichi se un numero è un palindromo (si legge allo stesso modo da sinistra a destra e viceversa).
+                    <br><strong>Obiettivo:</strong> lavorare con numeri e stringhe.
+                </div>
+                <div id="solution-85" class="solution">
+                    <pre>n = input("Inserisci un numero: ")
+if n == n[::-1]:
+    print("Il numero è un palindromo.")
+else:
+    print("Il numero non è un palindromo.")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 086 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 086</span>
+                    <span class="exercise-title">Calculate Perimeter of a Square</span>
+                    <button class="solution-btn" onclick="toggleSolution(86)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli il perimetro di un quadrato dato il lato.
+                    <br><strong>Obiettivo:</strong> praticare input e operazioni aritmetiche.
+                </div>
+                <div id="solution-86" class="solution">
+                    <pre>lato = float(input("Inserisci il lato del quadrato: "))
+perimetro = 4 * lato
+print(f"Il perimetro del quadrato è {perimetro}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 087 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 087</span>
+                    <span class="exercise-title">Factorial using Iteration</span>
+                    <button class="solution-btn" onclick="toggleSolution(87)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli il fattoriale di un numero usando un ciclo iterativo.
+                    <br><strong>Obiettivo:</strong> imparare cicli iterativi.
+                </div>
+                <div id="solution-87" class="solution">
+                    <pre>n = int(input("Inserisci un numero: "))
+fattoriale = 1
+for i in range(1, n + 1):
+    fattoriale *= i
+print(f"Il fattoriale di {n} è {fattoriale}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 088 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 088</span>
+                    <span class="exercise-title">Generate List of Primes up to N</span>
+                    <button class="solution-btn" onclick="toggleSolution(88)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che generi una lista di numeri primi fino a N.
+                    <br><strong>Obiettivo:</strong> lavorare con cicli e condizioni.
+                </div>
+                <div id="solution-88" class="solution">
+                    <pre>n = int(input("Inserisci N: "))
+primi = []
+for num in range(2, n + 1):
+    is_primo = True
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            is_primo = False
+            break
+    if is_primo:
+        primi.append(num)
+print("Numeri primi fino a", n, ":", primi)</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 089 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 089</span>
+                    <span class="exercise-title">Sum of Squares from 1 to N</span>
+                    <button class="solution-btn" onclick="toggleSolution(89)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli la somma dei quadrati da 1 a N.
+                    <br><strong>Obiettivo:</strong> utilizzare cicli e operazioni.
+                </div>
+                <div id="solution-89" class="solution">
+                    <pre>n = int(input("Inserisci N: "))
+somma = 0
+for i in range(1, n + 1):
+    somma += i ** 2
+print(f"La somma dei quadrati da 1 a {n} è {somma}.")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 090 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 090</span>
+                    <span class="exercise-title">Convert Celsius to Kelvin</span>
+                    <button class="solution-btn" onclick="toggleSolution(90)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che converta una temperatura da Celsius a Kelvin.
+                    <br><strong>Obiettivo:</strong> praticare operazioni aritmetiche.
+                </div>
+                <div id="solution-90" class="solution">
+                    <pre>celsius = float(input("Inserisci la temperatura in Celsius: "))
+kelvin = celsius + 273.15
+print(f"{celsius}°C corrisponde a {kelvin} K")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 091 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 091</span>
+                    <span class="exercise-title">Find LCM of Two Numbers</span>
+                    <button class="solution-btn" onclick="toggleSolution(91)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che trovi il minimo comune multiplo (LCM) di due numeri.
+                    <br><strong>Obiettivo:</strong> utilizzare GCD per calcolare LCM.
+                </div>
+                <div id="solution-91" class="solution">
+                    <pre>def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b)
+
+a = int(input("Inserisci il primo numero: "))
+b = int(input("Inserisci il secondo numero: "))
+print(f"L'LCM di {a} e {b} è {lcm(a, b)}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 092 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 092</span>
+                    <span class="exercise-title">Count Vowels and Consonants in a String</span>
+                    <button class="solution-btn" onclick="toggleSolution(92)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che conti vocali e consonanti in una stringa.
+                    <br><strong>Obiettivo:</strong> analizzare stringhe dettagliatamente.
+                </div>
+                <div id="solution-92" class="solution">
+                    <pre>stringa = input("Inserisci una stringa: ").lower()
+vocali = 0
+consonanti = 0
+for char in stringa:
+    if char.isalpha():
+        if char in 'aeiou':
+            vocali += 1
+        else:
+            consonanti += 1
+print(f"Vocali: {vocali}, Consonanti: {consonanti}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 093 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 093</span>
+                    <span class="exercise-title">Reverse a List without Reverse</span>
+                    <button class="solution-btn" onclick="toggleSolution(93)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che inverta una lista senza usare reverse().
+                    <br><strong>Obiettivo:</strong> manipolare liste manualmente.
+                </div>
+                <div id="solution-93" class="solution">
+                    <pre>numeri = list(map(int, input("Inserisci numeri separati da spazio: ").split()))
+invertita = []
+for i in range(len(numeri) - 1, -1, -1):
+    invertita.append(numeri[i])
+print("Lista invertita:", invertita)</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 094 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 094</span>
+                    <span class="exercise-title">Calculate Distance Between Two Points</span>
+                    <button class="solution-btn" onclick="toggleSolution(94)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli la distanza euclidea tra due punti nel piano.
+                    <br><strong>Obiettivo:</strong> utilizzare il teorema di Pitagora.
+                </div>
+                <div id="solution-94" class="solution">
+                    <pre>import math
+x1 = float(input("Inserisci x1: "))
+y1 = float(input("Inserisci y1: "))
+x2 = float(input("Inserisci x2: "))
+y2 = float(input("Inserisci y2: "))
+distanza = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+print(f"La distanza è {distanza:.2f}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 095 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 095</span>
+                    <span class="exercise-title">Simple Email Validation</span>
+                    <button class="solution-btn" onclick="toggleSolution(95)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che verifichi se una stringa è un indirizzo email valido (semplice controllo).
+                    <br><strong>Obiettivo:</strong> lavorare con stringhe e condizioni.
+                </div>
+                <div id="solution-95" class="solution">
+                    <pre>email = input("Inserisci un indirizzo email: ")
+if '@' in email and '.' in email.split('@')[1]:
+    print("Email valida.")
+else:
+    print("Email non valida.")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 096 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 096</span>
+                    <span class="exercise-title">Find Intersection of Two Lists</span>
+                    <button class="solution-btn" onclick="toggleSolution(96)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che trovi l'intersezione di due liste.
+                    <br><strong>Obiettivo:</strong> lavorare con insiemi o liste.
+                </div>
+                <div id="solution-96" class="solution">
+                    <pre>lista1 = list(map(int, input("Inserisci la prima lista separata da spazio: ").split()))
+lista2 = list(map(int, input("Inserisci la seconda lista separata da spazio: ").split()))
+intersezione = []
+for item in lista1:
+    if item in lista2 and item not in intersezione:
+        intersezione.append(item)
+print("Intersezione:", intersezione)</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 097 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 097</span>
+                    <span class="exercise-title">Calculate Volume of a Sphere</span>
+                    <button class="solution-btn" onclick="toggleSolution(97)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli il volume di una sfera dato il raggio.
+                    <br><strong>Obiettivo:</strong> utilizzare formule geometriche.
+                </div>
+                <div id="solution-97" class="solution">
+                    <pre>import math
+raggio = float(input("Inserisci il raggio della sfera: "))
+volume = (4/3) * math.pi * raggio ** 3
+print(f"Il volume della sfera è {volume:.2f}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 098 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 098</span>
+                    <span class="exercise-title">Sort a List in Descending Order</span>
+                    <button class="solution-btn" onclick="toggleSolution(98)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che ordini una lista in ordine decrescente.
+                    <br><strong>Obiettivo:</strong> utilizzare sort() con reverse.
+                </div>
+                <div id="solution-98" class="solution">
+                    <pre>numeri = list(map(int, input("Inserisci numeri separati da spazio: ").split()))
+numeri.sort(reverse=True)
+print("Lista ordinata decrescente:", numeri)</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 099 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 099</span>
+                    <span class="exercise-title">Print Multiplication Table for a Number</span>
+                    <button class="solution-btn" onclick="toggleSolution(99)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che stampi la tabellina di moltiplicazione per un numero fino a 10.
+                    <br><strong>Obiettivo:</strong> utilizzare cicli per output formattato.
+                </div>
+                <div id="solution-99" class="solution">
+                    <pre>n = int(input("Inserisci un numero: "))
+for i in range(1, 11):
+    print(f"{n} x {i} = {n * i}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 100 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 100</span>
+                    <span class="exercise-title">Calculate the Hypotenuse of a Right Triangle</span>
+                    <button class="solution-btn" onclick="toggleSolution(100)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli l'ipotenusa di un triangolo rettangolo dati i due cateti.
+                    <br><strong>Obiettivo:</strong> applicare il teorema di Pitagora.
+                </div>
+                <div id="solution-100" class="solution">
+                    <pre>import math
+cateto1 = float(input("Inserisci il primo cateto: "))
+cateto2 = float(input("Inserisci il secondo cateto: "))
+ipotenusa = math.sqrt(cateto1**2 + cateto2**2)
+print(f"L'ipotenusa è {ipotenusa:.2f}")</pre>
+                </div>
+            </div>
+
+            <!-- Pagination for Principiante -->
+            <div class="pagination" id="pagination-principiante">
+                <button class="page-btn" onclick="changePage('principiante', -1)">Precedente</button>
+                <span id="page-info-principiante">Pagina 1 di 10</span>
+                <button class="page-btn" onclick="changePage('principiante', 1)">Successiva</button>
+            </div>
+        </div>
+
+        <!-- LIVELLO INTERMEDIO -->
+        <div id="intermedio" class="level-section">
+            <h2 class="level-title">🖥️ Livello: Intermedio</h2>
+
+            <!-- Esercizio 004 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 004</span>
+                    <span class="exercise-title">Tabellina di un Numero</span>
+                    <button class="solution-btn" onclick="toggleSolution(4)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che stampi la tabellina di un numero inserito dall'utente, da 1 a 10.
+                    <br><strong>Obiettivo:</strong> esercitarsi nell'utilizzo di cicli <code>for</code> e nella formattazione dell'output.
+                </div>
+                <div id="solution-4" class="solution">
+                    <pre># Programma che stampa la tabellina di un numero
+n = int(input("Inserisci un numero: "))
+for i in range(1, 11):
+    print(f"{n} x {i} = {n * i}") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 005 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 005</span>
+                    <span class="exercise-title">Fattoriale di un Numero</span>
+                    <button class="solution-btn" onclick="toggleSolution(5)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli il fattoriale di un numero inserito dall'utente.
+                    <br><strong>Obiettivo:</strong> capire il concetto di fattoriale e come utilizzare i cicli.
+                </div>
+                <div id="solution-5" class="solution">
+                    <pre># Programma che calcola il fattoriale di un numero
+n = int(input("Inserisci un numero: "))
+fattoriale = 1
+for i in range(1, n + 1):
+    fattoriale *= i
+print(f"Il fattoriale di {n} è {fattoriale}") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 008 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 008</span>
+                    <span class="exercise-title">Serie di Fibonacci</span>
+                    <button class="solution-btn" onclick="toggleSolution(8)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che generi la serie di Fibonacci fino a un numero dato dall'utente (es. fino al 10° termine).
+                    <br><strong>Obiettivo:</strong> imparare a lavorare con sequenze ricorsive e cicli.
+                </div>
+                <div id="solution-8" class="solution">
+                    <pre># Programma che genera la serie di Fibonacci
+n = int(input("Inserisci il numero di termini: "))
+a, b = 0, 1
+for i in range(n):
+    print(a, end=" ")
+    a, b = b, a + b
+print() </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 020 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 020</span>
+                    <span class="exercise-title">Bubble Sort</span>
+                    <button class="solution-btn" onclick="toggleSolution(20)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che implementi l'algoritmo Bubble Sort per ordinare una lista di numeri.
+                    <br><strong>Obiettivo:</strong> imparare algoritmi di ordinamento e cicli annidati.
+                </div>
+                <div id="solution-20" class="solution">
+                    <pre># Bubble Sort
+numeri = list(map(int, input("Inserisci numeri separati da spazio: ").split()))
+n = len(numeri)
+for i in range(n):
+    for j in range(0, n-i-1):
+        if numeri[j] > numeri[j+1]:
+            numeri[j], numeri[j+1] = numeri[j+1], numeri[j]
+print("Lista ordinata:", numeri) </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 021 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 021</span>
+                    <span class="exercise-title">Binary Search</span>
+                    <button class="solution-btn" onclick="toggleSolution(21)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che implementi la ricerca binaria su una lista ordinata.
+                    <br><strong>Obiettivo:</strong> imparare algoritmi di ricerca efficienti.
+                </div>
+                <div id="solution-21" class="solution">
+                    <pre># Binary Search
+def binary_search(arr, x):
+    low = 0
+    high = len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] < x:
+            low = mid + 1
+        elif arr[mid] > x:
+            high = mid - 1
+        else:
+            return mid
+    return -1
+
+arr = [1, 3, 5, 7, 9]
+x = int(input("Inserisci il numero da cercare: "))
+result = binary_search(arr, x)
+if result != -1:
+    print(f"Elemento trovato all'indice {result}")
+else:
+    print("Elemento non trovato") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 022 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 022</span>
+                    <span class="exercise-title">Matrix Addition</span>
+                    <button class="solution-btn" onclick="toggleSolution(22)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che sommi due matrici 2x2.
+                    <br><strong>Obiettivo:</strong> lavorare con liste annidate (matrici).
+                </div>
+                <div id="solution-22" class="solution">
+                    <pre># Somma di matrici
+A = [[1, 2], [3, 4]]
+B = [[5, 6], [7, 8]]
+result = [[0, 0], [0, 0]]
+for i in range(len(A)):
+    for j in range(len(A[0])):
+        result[i][j] = A[i][j] + B[i][j]
+print("Somma delle matrici:", result) </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 023 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 023</span>
+                    <span class="exercise-title">Read from File</span>
+                    <button class="solution-btn" onclick="toggleSolution(23)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che legga il contenuto di un file di testo e lo stampi.
+                    <br><strong>Obiettivo:</strong> imparare a lavorare con file.
+                </div>
+                <div id="solution-23" class="solution">
+                    <pre># Lettura da file
+try:
+    with open('file.txt', 'r') as file:
+        content = file.read()
+        print(content)
+except FileNotFoundError:
+    print("File non trovato.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 024 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 024</span>
+                    <span class="exercise-title">Exception Handling</span>
+                    <button class="solution-btn" onclick="toggleSolution(24)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che gestisca eccezioni per divisione per zero.
+                    <br><strong>Obiettivo:</strong> imparare la gestione degli errori.
+                </div>
+                <div id="solution-24" class="solution">
+                    <pre># Gestione eccezioni
+try:
+    a = int(input("Inserisci numeratore: "))
+    b = int(input("Inserisci denominatore: "))
+    result = a / b
+    print(f"Risultato: {result}")
+except ZeroDivisionError:
+    print("Errore: divisione per zero.")
+except ValueError:
+    print("Errore: input non valido.") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 025 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 025</span>
+                    <span class="exercise-title">Lambda Functions</span>
+                    <button class="solution-btn" onclick="toggleSolution(25)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che utilizzi funzioni lambda per ordinare una lista di tuple.
+                    <br><strong>Obiettivo:</strong> imparare funzioni lambda e ordinamento.
+                </div>
+                <div id="solution-25" class="solution">
+                    <pre># Funzioni lambda
+tuples = [(1, 'b'), (2, 'a'), (3, 'c')]
+sorted_tuples = sorted(tuples, key=lambda x: x[1])
+print("Tuple ordinate:", sorted_tuples) </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 026 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 026</span>
+                    <span class="exercise-title">List Comprehensions</span>
+                    <button class="solution-btn" onclick="toggleSolution(26)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che utilizzi list comprehensions per creare una lista di quadrati.
+                    <br><strong>Obiettivo:</strong> imparare list comprehensions.
+                </div>
+                <div id="solution-26" class="solution">
+                    <pre># List comprehensions
+numeri = [1, 2, 3, 4, 5]
+quadrati = [x**2 for x in numeri]
+print("Quadrati:", quadrati) </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 027 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 027</span>
+                    <span class="exercise-title">Dictionary Operations</span>
+                    <button class="solution-btn" onclick="toggleSolution(27)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che crei un dizionario e iteri su di esso.
+                    <br><strong>Obiettivo:</strong> lavorare con dizionari.
+                </div>
+                <div id="solution-27" class="solution">
+                    <pre># Operazioni su dizionari
+dizionario = {'a': 1, 'b': 2, 'c': 3}
+for chiave, valore in dizionario.items():
+    print(f"{chiave}: {valore}") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 028 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 028</span>
+                    <span class="exercise-title">Set Operations</span>
+                    <button class="solution-btn" onclick="toggleSolution(28)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che dimostri operazioni su insiemi (union, intersection).
+                    <br><strong>Obiettivo:</strong> imparare insiemi in Python.
+                </div>
+                <div id="solution-28" class="solution">
+                    <pre># Operazioni su insiemi
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+union = set1 | set2
+intersection = set1 & set2
+print("Unione:", union)
+print("Intersezione:", intersection) </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 029 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 029</span>
+                    <span class="exercise-title">Recursive Factorial</span>
+                    <button class="solution-btn" onclick="toggleSolution(29)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli il fattoriale usando ricorsione.
+                    <br><strong>Obiettivo:</strong> imparare funzioni ricorsive.
+                </div>
+                <div id="solution-29" class="solution">
+                    <pre># Fattoriale ricorsivo
+def fattoriale(n):
+    if n == 0:
+        return 1
+    else:
+        return n * fattoriale(n-1)
+
+n = int(input("Inserisci un numero: "))
+print(f"Il fattoriale di {n} è {fattoriale(n)}") </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 030 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 030</span>
+                    <span class="exercise-title">Somma Ricorsiva di una Lista</span>
+                    <button class="solution-btn" onclick="toggleSolution(30)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che calcoli la somma degli elementi di una lista usando la ricorsione.
+                    <br><strong>Obiettivo:</strong> imparare a lavorare con funzioni ricorsive su liste.
+                </div>
+                <div id="solution-30" class="solution">
+                    <pre>def somma_ricorsiva(lst):
+    if not lst:
+        return 0
+    return lst[0] + somma_ricorsiva(lst[1:])
+
+lista = [1, 2, 3, 4, 5]
+print(f"Somma: {somma_ricorsiva(lista)}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 031 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 031</span>
+                    <span class="exercise-title">Torre di Hanoi</span>
+                    <button class="solution-btn" onclick="toggleSolution(31)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Implementa l'algoritmo della Torre di Hanoi usando la ricorsione per n dischi.
+                    <br><strong>Obiettivo:</strong> risolvere problemi classici con ricorsione.
+                </div>
+                <div id="solution-31" class="solution">
+                    <pre>def hanoi(n, from_rod, to_rod, aux_rod):
+    if n == 1:
+        print(f"Move disk 1 from {from_rod} to {to_rod}")
+        return
+    hanoi(n-1, from_rod, aux_rod, to_rod)
+    print(f"Move disk {n} from {from_rod} to {to_rod}")
+    hanoi(n-1, aux_rod, to_rod, from_rod)
+
+hanoi(3, 'A', 'C', 'B')</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 032 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 032</span>
+                    <span class="exercise-title">Scrittura su File</span>
+                    <button class="solution-btn" onclick="toggleSolution(32)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che scriva una lista di stringhe in un file di testo.
+                    <br><strong>Obiettivo:</strong> imparare a scrivere su file.
+                </div>
+                <div id="solution-32" class="solution">
+                    <pre>righe = ["Prima riga", "Seconda riga", "Terza riga"]
+with open('output.txt', 'w') as file:
+    for riga in righe:
+        file.write(riga + '\n')
+print("File scritto con successo.")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 033 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 033</span>
+                    <span class="exercise-title">Lettura JSON</span>
+                    <button class="solution-btn" onclick="toggleSolution(33)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Leggi il contenuto di un file JSON e stampalo a video.
+                    <br><strong>Obiettivo:</strong> lavorare con dati JSON.
+                </div>
+                <div id="solution-33" class="solution">
+                    <pre>import json
+try:
+    with open('data.json', 'r') as file:
+        data = json.load(file)
+        print("Contenuto JSON:", data)
+except FileNotFoundError:
+    print("File data.json non trovato.")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 034 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 034</span>
+                    <span class="exercise-title">Ricerca con Regular Expressions</span>
+                    <button class="solution-btn" onclick="toggleSolution(34)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Usa le espressioni regolari per trovare tutte le email in una stringa di testo.
+                    <br><strong>Obiettivo:</strong> imparare a usare il modulo re per pattern matching.
+                </div>
+                <div id="solution-34" class="solution">
+                    <pre>import re
+testo = "Contatta me@example.com o info@test.it per dettagli."
+emails = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', testo)
+print("Email trovate:", emails)</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 035 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 035</span>
+                    <span class="exercise-title">Differenza tra Date</span>
+                    <button class="solution-btn" onclick="toggleSolution(35)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Calcola la differenza in giorni tra due date usando il modulo datetime.
+                    <br><strong>Obiettivo:</strong> lavorare con date e calcoli temporali.
+                </div>
+                <div id="solution-35" class="solution">
+                    <pre>from datetime import datetime
+data1 = datetime(2023, 1, 1)
+data2 = datetime(2023, 12, 31)
+differenza = (data2 - data1).days
+print(f"Differenza: {differenza} giorni")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 036 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 036</span>
+                    <span class="exercise-title">Generatore di Password Casuali</span>
+                    <button class="solution-btn" onclick="toggleSolution(36)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che generi una password casuale di lunghezza specificata.
+                    <br><strong>Obiettivo:</strong> usare il modulo random e string per generazione sicura.
+                </div>
+                <div id="solution-36" class="solution">
+                    <pre>import random
+import string
+def genera_password(lunghezza):
+    caratteri = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(random.choice(caratteri) for _ in range(lunghezza))
+    return password
+lunghezza = 12
+print(f"Password generata: {genera_password(lunghezza)}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 037 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 037</span>
+                    <span class="exercise-title">Funzioni Matematiche</span>
+                    <button class="solution-btn" onclick="toggleSolution(37)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Usa il modulo math per calcolare seno, coseno e radice quadrata.
+                    <br><strong>Obiettivo:</strong> esplorare funzioni matematiche avanzate.
+                </div>
+                <div id="solution-37" class="solution">
+                    <pre>import math
+angolo = math.radians(45)
+print(f"Seno di 45°: {math.sin(angolo):.2f}")
+print(f"Coseno di 45°: {math.cos(angolo):.2f}")
+print(f"Radice quadrata di 16: {math.sqrt(16)}")
+print(f"Pi greco: {math.pi:.2f}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 038 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 038</span>
+                    <span class="exercise-title">Operazioni sui Path con OS</span>
+                    <button class="solution-btn" onclick="toggleSolution(38)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Usa os.path per verificare l'esistenza di un file e ottenere il percorso assoluto.
+                    <br><strong>Obiettivo:</strong> lavorare con percorsi di file.
+                </div>
+                <div id="solution-38" class="solution">
+                    <pre>import os
+file_path = 'index.html'
+if os.path.exists(file_path):
+    print(f"Il file esiste. Percorso assoluto: {os.path.abspath(file_path)}")
+    print(f"Directory: {os.path.dirname(os.path.abspath(file_path))}")
+else:
+    print("Il file non esiste.")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 039 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 039</span>
+                    <span class="exercise-title">Argomenti della Riga di Comando</span>
+                    <button class="solution-btn" onclick="toggleSolution(39)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Leggi e stampa gli argomenti passati dalla riga di comando usando sys.argv.
+                    <br><strong>Obiettivo:</strong> interagire con l'ambiente di esecuzione.
+                </div>
+                <div id="solution-39" class="solution">
+                    <pre>import sys
+if len(sys.argv) > 1:
+    print(f"Argomenti passati: {sys.argv[1:]}")
+else:
+    print("Nessun argomento fornito dalla riga di comando.")</pre>
+                </div>
+            </div>
+            <!-- Esercizio 024 -->
+            <!-- Esercizio 024 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 024</span>
+                    <span class="exercise-title">Tabellina di un Numero - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(24)">Soluzione</button>
+                </div>
+            <!-- Esercizio 025 -->
+            <!-- Esercizio 025 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 025</span>
+                    <span class="exercise-title">Fattoriale di un Numero - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(25)">Soluzione</button>
+                </div>
+            <!-- Esercizio 026 -->
+            <!-- Esercizio 026 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 026</span>
+                    <span class="exercise-title">Serie di Fibonacci - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(26)">Soluzione</button>
+                </div>
+            <!-- Esercizio 027 -->
+            <!-- Esercizio 027 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 027</span>
+                    <span class="exercise-title">Bubble Sort - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(27)">Soluzione</button>
+                </div>
+            <!-- Esercizio 028 -->
+            <!-- Esercizio 028 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 028</span>
+                    <span class="exercise-title">Binary Search - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(28)">Soluzione</button>
+                </div>
+            <!-- Esercizio 029 -->
+            <!-- Esercizio 029 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 029</span>
+                    <span class="exercise-title">Matrix Addition - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(29)">Soluzione</button>
+                </div>
+            <!-- Esercizio 030 -->
+            <!-- Esercizio 030 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 030</span>
+                    <span class="exercise-title">Read from File - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(30)">Soluzione</button>
+                </div>
+            <!-- Esercizio 031 -->
+            <!-- Esercizio 031 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 031</span>
+                    <span class="exercise-title">Exception Handling - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(31)">Soluzione</button>
+                </div>
+            <!-- Esercizio 032 -->
+            <!-- Esercizio 032 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 032</span>
+                    <span class="exercise-title">Lambda Functions - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(32)">Soluzione</button>
+                </div>
+            <!-- Esercizio 033 -->
+            <!-- Esercizio 033 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 033</span>
+                    <span class="exercise-title">List Comprehensions - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(33)">Soluzione</button>
+                </div>
+            <!-- Esercizio 034 -->
+            <!-- Esercizio 034 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 034</span>
+                    <span class="exercise-title">Dictionary Operations - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(34)">Soluzione</button>
+                </div>
+            <!-- Esercizio 035 -->
+            <!-- Esercizio 035 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 035</span>
+                    <span class="exercise-title">Set Operations - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(35)">Soluzione</button>
+                </div>
+            <!-- Esercizio 036 -->
+            <!-- Esercizio 036 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 036</span>
+                    <span class="exercise-title">Recursive Factorial - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(36)">Soluzione</button>
+                </div>
+            <!-- Esercizio 037 -->
+            <!-- Esercizio 037 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 037</span>
+                    <span class="exercise-title">Somma Ricorsiva di una Lista - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(37)">Soluzione</button>
+                </div>
+            <!-- Esercizio 038 -->
+            <!-- Esercizio 038 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 038</span>
+                    <span class="exercise-title">Torre di Hanoi - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(38)">Soluzione</button>
+                </div>
+            <!-- Esercizio 039 -->
+            <!-- Esercizio 039 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 039</span>
+                    <span class="exercise-title">Scrittura su File - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(39)">Soluzione</button>
+                </div>
+            <!-- Esercizio 040 -->
+            <!-- Esercizio 040 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 040</span>
+                    <span class="exercise-title">Lettura JSON - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(40)">Soluzione</button>
+                </div>
+            <!-- Esercizio 041 -->
+            <!-- Esercizio 041 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 041</span>
+                    <span class="exercise-title">Ricerca con Regular Expressions - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(41)">Soluzione</button>
+                </div>
+            <!-- Esercizio 042 -->
+            <!-- Esercizio 042 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 042</span>
+                    <span class="exercise-title">Differenza tra Date - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(42)">Soluzione</button>
+                </div>
+            <!-- Esercizio 043 -->
+            <!-- Esercizio 043 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 043</span>
+                    <span class="exercise-title">Generatore di Password Casuali - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(43)">Soluzione</button>
+                </div>
+            <!-- Esercizio 044 -->
+            <!-- Esercizio 044 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 044</span>
+                    <span class="exercise-title">Funzioni Matematiche - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(44)">Soluzione</button>
+                </div>
+            <!-- Esercizio 045 -->
+            <!-- Esercizio 045 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 045</span>
+                    <span class="exercise-title">Operazioni sui Path con OS - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(45)">Soluzione</button>
+                </div>
+            <!-- Esercizio 046 -->
+            <!-- Esercizio 046 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 046</span>
+                    <span class="exercise-title">Argomenti della Riga di Comando - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(46)">Soluzione</button>
+                </div>
+            <!-- Esercizio 047 -->
+            <!-- Esercizio 047 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 047</span>
+                    <span class="exercise-title">Tabellina di un Numero - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(47)">Soluzione</button>
+                </div>
+            <!-- Esercizio 048 -->
+            <!-- Esercizio 048 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 048</span>
+                    <span class="exercise-title">Fattoriale di un Numero - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(48)">Soluzione</button>
+                </div>
+            <!-- Esercizio 049 -->
+            <!-- Esercizio 049 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 049</span>
+                    <span class="exercise-title">Serie di Fibonacci - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(49)">Soluzione</button>
+                </div>
+            <!-- Esercizio 050 -->
+            <!-- Esercizio 050 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 050</span>
+                    <span class="exercise-title">Bubble Sort - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(50)">Soluzione</button>
+                </div>
+            <!-- Esercizio 051 -->
+            <!-- Esercizio 051 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 051</span>
+                    <span class="exercise-title">Binary Search - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(51)">Soluzione</button>
+                </div>
+            <!-- Esercizio 052 -->
+            <!-- Esercizio 052 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 052</span>
+                    <span class="exercise-title">Matrix Addition - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(52)">Soluzione</button>
+                </div>
+            <!-- Esercizio 053 -->
+            <!-- Esercizio 053 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 053</span>
+                    <span class="exercise-title">Read from File - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(53)">Soluzione</button>
+                </div>
+            <!-- Esercizio 054 -->
+            <!-- Esercizio 054 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 054</span>
+                    <span class="exercise-title">Exception Handling - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(54)">Soluzione</button>
+                </div>
+            <!-- Esercizio 055 -->
+            <!-- Esercizio 055 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 055</span>
+                    <span class="exercise-title">Lambda Functions - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(55)">Soluzione</button>
+                </div>
+            <!-- Esercizio 056 -->
+            <!-- Esercizio 056 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 056</span>
+                    <span class="exercise-title">List Comprehensions - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(56)">Soluzione</button>
+                </div>
+            <!-- Esercizio 057 -->
+            <!-- Esercizio 057 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 057</span>
+                    <span class="exercise-title">Dictionary Operations - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(57)">Soluzione</button>
+                </div>
+            <!-- Esercizio 058 -->
+            <!-- Esercizio 058 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 058</span>
+                    <span class="exercise-title">Set Operations - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(58)">Soluzione</button>
+                </div>
+            <!-- Esercizio 059 -->
+            <!-- Esercizio 059 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 059</span>
+                    <span class="exercise-title">Recursive Factorial - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(59)">Soluzione</button>
+                </div>
+            <!-- Esercizio 060 -->
+            <!-- Esercizio 060 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 060</span>
+                    <span class="exercise-title">Somma Ricorsiva di una Lista - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(60)">Soluzione</button>
+                </div>
+            <!-- Esercizio 061 -->
+            <!-- Esercizio 061 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 061</span>
+                    <span class="exercise-title">Torre di Hanoi - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(61)">Soluzione</button>
+                </div>
+            <!-- Esercizio 062 -->
+            <!-- Esercizio 062 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 062</span>
+                    <span class="exercise-title">Scrittura su File - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(62)">Soluzione</button>
+                </div>
+            <!-- Esercizio 063 -->
+            <!-- Esercizio 063 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 063</span>
+                    <span class="exercise-title">Lettura JSON - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(63)">Soluzione</button>
+                </div>
+            <!-- Esercizio 064 -->
+            <!-- Esercizio 064 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 064</span>
+                    <span class="exercise-title">Ricerca con Regular Expressions - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(64)">Soluzione</button>
+                </div>
+            <!-- Esercizio 065 -->
+            <!-- Esercizio 065 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 065</span>
+                    <span class="exercise-title">Differenza tra Date - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(65)">Soluzione</button>
+                </div>
+            <!-- Esercizio 066 -->
+            <!-- Esercizio 066 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 066</span>
+                    <span class="exercise-title">Generatore di Password Casuali - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(66)">Soluzione</button>
+                </div>
+            <!-- Esercizio 067 -->
+            <!-- Esercizio 067 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 067</span>
+                    <span class="exercise-title">Funzioni Matematiche - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(67)">Soluzione</button>
+                </div>
+            <!-- Esercizio 068 -->
+            <!-- Esercizio 068 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 068</span>
+                    <span class="exercise-title">Operazioni sui Path con OS - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(68)">Soluzione</button>
+                </div>
+            <!-- Esercizio 069 -->
+            <!-- Esercizio 069 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 069</span>
+                    <span class="exercise-title">Argomenti della Riga di Comando - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(69)">Soluzione</button>
+                </div>
+
+            <!-- Pagination for Intermedio -->
+            <div class="pagination" id="pagination-intermedio">
+                <button class="page-btn" onclick="changePage('intermedio', -1)">Precedente</button>
+                <span id="page-info-intermedio">Pagina 1 di 10</span>
+                <button class="page-btn" onclick="changePage('intermedio', 1)">Successiva</button>
+            </div>
+        </div>
+
+        <!-- OOP -->
+        <div id="oop" class="level-section">
+            <h2 class="level-title">💼 Livello: OOP (Programmazione Orientata agli Oggetti)</h2>
+
+            <!-- Esercizio 006 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 006</span>
+                    <span class="exercise-title">Classe "Auto"</span>
+                    <button class="solution-btn" onclick="toggleSolution(6)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Scrivi una classe chiamata <code>Auto</code> con un attributo per il modello e un metodo che restituisce il modello della macchina.
+                    <br><strong>Obiettivo:</strong> introdurre il concetto di classi e metodi in Python.
+                </div>
+                <div id="solution-6" class="solution">
+                    <pre># Creazione della classe Auto
+class Auto:
+    def __init__(self, modello):
+        self.modello = modello
+    
+    def get_modello(self):
+        return self.modello
+
+auto1 = Auto("Fiat Panda")
+print(auto1.get_modello())  # Output: Fiat Panda </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 030 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 030</span>
+                    <span class="exercise-title">Classe Studente con Attributi Multipli</span>
+                    <button class="solution-btn" onclick="toggleSolution(30)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea una classe <code>Studente</code> con attributi nome, età e voto. Aggiungi un metodo per stampare le informazioni.
+                    <br><strong>Obiettivo:</strong> lavorare con classi e attributi multipli.
+                </div>
+                <div id="solution-30" class="solution">
+                    <pre># Classe Studente
+class Studente:
+    def __init__(self, nome, eta, voto):
+        self.nome = nome
+        self.eta = eta
+        self.voto = voto
+    
+    def info(self):
+        print(f"Nome: {self.nome}, Età: {self.eta}, Voto: {self.voto}")
+
+studente1 = Studente("Mario", 20, 8.5)
+studente1.info() </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 031 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 031</span>
+                    <span class="exercise-title">Ereditarietà</span>
+                    <button class="solution-btn" onclick="toggleSolution(31)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea una classe base <code>Animale</code> e una sottoclasse <code>Cane</code> che eredita da essa.
+                    <br><strong>Obiettivo:</strong> imparare l'ereditarietà.
+                </div>
+                <div id="solution-31" class="solution">
+                    <pre># Ereditarietà
+class Animale:
+    def __init__(self, nome):
+        self.nome = nome
+    
+    def parla(self):
+        print("Suono generico")
+
+class Cane(Animale):
+    def parla(self):
+        print("Bau!")
+
+cane = Cane("Fido")
+cane.parla() </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 032 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 032</span>
+                    <span class="exercise-title">Polimorfismo</span>
+                    <button class="solution-btn" onclick="toggleSolution(32)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Usa polimorfismo con classi <code>Gatto</code> e <code>Cane</code> che sovrascrivono il metodo <code>parla</code>.
+                    <br><strong>Obiettivo:</strong> capire il polimorfismo.
+                </div>
+                <div id="solution-32" class="solution">
+                    <pre># Polimorfismo
+class Animale:
+    def parla(self):
+        pass
+
+class Cane(Animale):
+    def parla(self):
+        return "Bau!"
+
+class Gatto(Animale):
+    def parla(self):
+        return "Miao!"
+
+animali = [Cane(), Gatto()]
+for animale in animali:
+    print(animale.parla()) </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 033 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 033</span>
+                    <span class="exercise-title">Incapsulamento</span>
+                    <button class="solution-btn" onclick="toggleSolution(33)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea una classe <code>ContoBancario</code> con attributi privati e metodi getter/setter.
+                    <br><strong>Obiettivo:</strong> imparare l'incapsulamento.
+                </div>
+                <div id="solution-33" class="solution">
+                    <pre># Incapsulamento
+class ContoBancario:
+    def __init__(self, saldo):
+        self.__saldo = saldo
+    
+    def get_saldo(self):
+        return self.__saldo
+    
+    def deposita(self, importo):
+        self.__saldo += importo
+
+conto = ContoBancario(1000)
+print(conto.get_saldo())  # 1000
+conto.deposita(500)
+print(conto.get_saldo())  # 1500 </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 034 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 034</span>
+                    <span class="exercise-title">Metodi Statici</span>
+                    <button class="solution-btn" onclick="toggleSolution(34)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Aggiungi un metodo statico a una classe per calcolare qualcosa senza istanza.
+                    <br><strong>Obiettivo:</strong> lavorare con metodi statici.
+                </div>
+                <div id="solution-34" class="solution">
+                    <pre># Metodi statici
+class Calcolatrice:
+    @staticmethod
+    def somma(a, b):
+        return a + b
+
+print(Calcolatrice.somma(5, 3))  # 8 </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 035 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 035</span>
+                    <span class="exercise-title">Variabili di Classe</span>
+                    <button class="solution-btn" onclick="toggleSolution(35)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea una classe con una variabile di classe condivisa tra tutte le istanze.
+                    <br><strong>Obiettivo:</strong> capire variabili di classe.
+                </div>
+                <div id="solution-35" class="solution">
+                    <pre># Variabili di classe
+class Studente:
+    scuola = "Liceo"  # Variabile di classe
+    
+    def __init__(self, nome):
+        self.nome = nome
+
+studente1 = Studente("Anna")
+studente2 = Studente("Luca")
+print(studente1.scuola)  # Liceo
+print(studente2.scuola)  # Liceo
+Studente.scuola = "Università"
+print(studente1.scuola)  # Università </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 036 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 036</span>
+                    <span class="exercise-title">Classi Astratte</span>
+                    <button class="solution-btn" onclick="toggleSolution(36)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Usa <code>abc</code> per creare una classe astratta con un metodo astratto.
+                    <br><strong>Obiettivo:</strong> imparare classi astratte.
+                </div>
+                <div id="solution-36" class="solution">
+                    <pre># Classi astratte
+from abc import ABC, abstractmethod
+
+class Forma(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+class Rettangolo(Forma):
+    def __init__(self, larghezza, altezza):
+        self.larghezza = larghezza
+        self.altezza = altezza
+    
+    def area(self):
+        return self.larghezza * self.altezza
+
+rett = Rettangolo(4, 5)
+print(rett.area())  # 20 </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 037 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 037</span>
+                    <span class="exercise-title">Sovrascrittura Metodi</span>
+                    <button class="solution-btn" onclick="toggleSolution(37)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Sovrascrivi un metodo in una sottoclasse per comportarsi diversamente.
+                    <br><strong>Obiettivo:</strong> praticare la sovrascrittura.
+                </div>
+                <div id="solution-37" class="solution">
+                    <pre># Sovrascrittura metodi
+class Veicolo:
+    def muovi(self):
+        print("Il veicolo si muove")
+
+class Auto(Veicolo):
+    def muovi(self):
+        print("L'auto guida sulla strada")
+
+auto = Auto()
+auto.muovi()  # L'auto guida sulla strada </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 038 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 038</span>
+                    <span class="exercise-title">Composizione</span>
+                    <button class="solution-btn" onclick="toggleSolution(38)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea classi che usano altre classi come attributi (composizione).
+                    <br><strong>Obiettivo:</strong> imparare la composizione.
+                </div>
+                <div id="solution-38" class="solution">
+                    <pre># Composizione
+class Motore:
+    def __init__(self, tipo):
+        self.tipo = tipo
+
+class Auto:
+    def __init__(self, modello):
+        self.modello = modello
+        self.motore = Motore("Benzina")
+
+auto = Auto("Tesla")
+print(auto.motore.tipo)  # Benzina </pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 039 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 039</span>
+                    <span class="exercise-title">Overloading Operatori</span>
+                    <button class="solution-btn" onclick="toggleSolution(39)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Sovrascrivi operatori come <code>__add__</code> in una classe.
+                    <br><strong>Obiettivo:</strong> overloading degli operatori.
+                </div>
+                <div id="solution-39" class="solution">
+                    <pre># Overloading operatori
+class Punto:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other):
+        return Punto(self.x + other.x, self.y + other.y)
+
+    def __str__(self):
+        return f"({self.x}, {self.y})"
+
+p1 = Punto(1, 2)
+p2 = Punto(3, 4)
+p3 = p1 + p2
+print(p3)  # (4, 6) </pre>
+                </div>
+            </div>
+
+            <!-- Duplicate exercises for OOP to reach 100 (example: adding 5 more variants) -->
+            <!-- Esercizio 040 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 040</span>
+                    <span class="exercise-title">Classe "Auto" - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(40)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea una classe chiamata <code>Auto</code> con attributi marca e modello, e un metodo che restituisce una descrizione completa.
+                    <br><strong>Obiettivo:</strong> introdurre classi con più attributi.
+                </div>
+                <div id="solution-40" class="solution">
+                    <pre>class Auto:
+    def __init__(self, marca, modello):
+        self.marca = marca
+        self.modello = modello
+
+    def descrizione(self):
+        return f"{self.marca} {self.modello}"
+
+auto1 = Auto("Fiat", "Panda")
+print(auto1.descrizione())</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 041 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 041</span>
+                    <span class="exercise-title">Ereditarietà - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(41)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea una classe base <code>Animale</code> con metodo <code>suono</code>, e sottoclassi <code>Cane</code> e <code>Gatto</code>.
+                    <br><strong>Obiettivo:</strong> ereditarietà con più sottoclassi.
+                </div>
+                <div id="solution-41" class="solution">
+                    <pre>class Animale:
+    def suono(self):
+        return "Suono generico"
+
+class Cane(Animale):
+    def suono(self):
+        return "Bau!"
+
+class Gatto(Animale):
+    def suono(self):
+        return "Miao!"
+
+cane = Cane()
+gatto = Gatto()
+print(cane.suono(), gatto.suono())</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 042 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 042</span>
+                    <span class="exercise-title">Incapsulamento - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(42)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea una classe <code>Banca</code> con saldo privato e metodi per depositare e prelevare.
+                    <br><strong>Obiettivo:</strong> incapsulamento con metodi aggiuntivi.
+                </div>
+                <div id="solution-42" class="solution">
+                    <pre>class Banca:
+    def __init__(self, saldo_iniziale):
+        self.__saldo = saldo_iniziale
+
+    def deposita(self, importo):
+        self.__saldo += importo
+
+    def preleva(self, importo):
+        if importo <= self.__saldo:
+            self.__saldo -= importo
+            return True
+        return False
+
+    def get_saldo(self):
+        return self.__saldo
+
+conto = Banca(1000)
+conto.deposita(500)
+print(conto.get_saldo())</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 043 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 043</span>
+                    <span class="exercise-title">Polimorfismo - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(43)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Usa polimorfismo con classi <code>Triangolo</code> e <code>Quadrato</code> che sovrascrivono <code>area</code>.
+                    <br><strong>Obiettivo:</strong> polimorfismo con calcolo aree.
+                </div>
+                <div id="solution-43" class="solution">
+                    <pre>class Forma:
+    def area(self):
+        pass
+
+class Triangolo(Forma):
+    def __init__(self, base, altezza):
+        self.base = base
+        self.altezza = altezza
+
+    def area(self):
+        return (self.base * self.altezza) / 2
+
+class Quadrato(Forma):
+    def __init__(self, lato):
+        self.lato = lato
+
+    def area(self):
+        return self.lato ** 2
+
+forme = [Triangolo(4, 5), Quadrato(3)]
+for forma in forme:
+    print(forma.area())</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 044 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 044</span>
+                    <span class="exercise-title">Metodi Statici - Variante 1</span>
+                    <button class="solution-btn" onclick="toggleSolution(44)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Aggiungi metodi statici a una classe <code>Matematica</code> per somma e moltiplicazione.
+                    <br><strong>Obiettivo:</strong> metodi statici multipli.
+                </div>
+                <div id="solution-44" class="solution">
+                    <pre>class Matematica:
+    @staticmethod
+    def somma(a, b):
+        return a + b
+
+    @staticmethod
+    def moltiplicazione(a, b):
+        return a * b
+
+print(Matematica.somma(5, 3))
+print(Matematica.moltiplicazione(5, 3))</pre>
+                </div>
+            </div>
+
+            <!-- Pagination for OOP -->
+            <div class="pagination" id="pagination-oop">
+                <button class="page-btn" onclick="changePage('oop', -1)">Precedente</button>
+                <span id="page-info-oop">Pagina 1 di 10</span>
+                <button class="page-btn" onclick="changePage('oop', 1)">Successiva</button>
+            </div>
+        </div>
+
+        <!-- DATA ANALYTICS -->
+        <div id="data-analytics" class="level-section">
+            <h2 class="level-title">📊 Livello: Data Analytics</h2>
+
+            <!-- Esercizio 040 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 040</span>
+                    <span class="exercise-title">Operazioni con NumPy Array</span>
+                    <button class="solution-btn" onclick="toggleSolution(40)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea un array NumPy con numeri da 1 a 10, calcola la media e la somma, e stampali.
+                    <br><strong>Obiettivo:</strong> imparare a lavorare con array NumPy e operazioni di base.
+                </div>
+                <div id="solution-40" class="solution">
+                    <pre>import numpy as np
+
+# Crea un array da 1 a 10
+arr = np.arange(1, 11)
+print("Array:", arr)
+
+# Calcola media e somma
+media = np.mean(arr)
+somma = np.sum(arr)
+print(f"Media: {media}")
+print(f"Somma: {somma}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 041 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 041</span>
+                    <span class="exercise-title">DataFrame con Pandas</span>
+                    <button class="solution-btn" onclick="toggleSolution(41)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea un DataFrame Pandas con dati di esempio (nomi, età, città), e filtra le righe dove l'età è maggiore di 25.
+                    <br><strong>Obiettivo:</strong> imparare a creare e filtrare DataFrame con Pandas.
+                </div>
+                <div id="solution-41" class="solution">
+                    <pre>import pandas as pd
+
+# Crea un DataFrame
+data = {
+    'Nome': ['Alice', 'Bob', 'Charlie', 'David'],
+    'Età': [24, 30, 22, 35],
+    'Città': ['Roma', 'Milano', 'Napoli', 'Torino']
+}
+df = pd.DataFrame(data)
+print("DataFrame originale:")
+print(df)
+
+# Filtra età > 25
+filtrato = df[df['Età'] > 25]
+print("\nFiltrato (età > 25):")
+print(filtrato)</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 042 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 042</span>
+                    <span class="exercise-title">Analisi Dati con Pandas</span>
+                    <button class="solution-btn" onclick="toggleSolution(42)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea un DataFrame con vendite mensili, calcola il totale delle vendite e la media.
+                    <br><strong>Obiettivo:</strong> praticare analisi dati di base con Pandas.
+                </div>
+                <div id="solution-42" class="solution">
+                    <pre>import pandas as pd
+
+# Crea DataFrame vendite
+vendite = pd.DataFrame({
+    'Mese': ['Gen', 'Feb', 'Mar', 'Apr'],
+    'Vendite': [1000, 1500, 1200, 1800]
+})
+print("Vendite mensili:")
+print(vendite)
+
+# Calcola totale e media
+totale = vendite['Vendite'].sum()
+media = vendite['Vendite'].mean()
+print(f"\nTotale vendite: {totale}")
+print(f"Media vendite: {media}")</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 043 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 043</span>
+                    <span class="exercise-title">Grafico con Matplotlib</span>
+                    <button class="solution-btn" onclick="toggleSolution(43)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea un grafico a linee semplice con Matplotlib usando dati di esempio.
+                    <br><strong>Obiettivo:</strong> imparare a creare grafici di base con Matplotlib.
+                </div>
+                <div id="solution-43" class="solution">
+                    <pre>import matplotlib.pyplot as plt
+
+# Dati di esempio
+x = [1, 2, 3, 4, 5]
+y = [2, 4, 6, 8, 10]
+
+# Crea grafico
+plt.plot(x, y)
+plt.title('Grafico a Linee Semplice')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.show()</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 044 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 044</span>
+                    <span class="exercise-title">Grafico a Barre con Matplotlib</span>
+                    <button class="solution-btn" onclick="toggleSolution(44)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea un grafico a barre con Matplotlib per mostrare le vendite di prodotti.
+                    <br><strong>Obiettivo:</strong> imparare a creare grafici a barre con Matplotlib.
+                </div>
+                <div id="solution-44" class="solution">
+                    <pre>import matplotlib.pyplot as plt
+
+# Dati di esempio
+prodotti = ['Prodotto A', 'Prodotto B', 'Prodotto C', 'Prodotto D']
+vendite = [23, 45, 56, 78]
+
+# Crea grafico a barre
+plt.bar(prodotti, vendite, color='skyblue')
+plt.title('Vendite per Prodotto')
+plt.xlabel('Prodotti')
+plt.ylabel('Vendite')
+plt.show()</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 045 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 045</span>
+                    <span class="exercise-title">Grafico a Dispersione con Matplotlib</span>
+                    <button class="solution-btn" onclick="toggleSolution(45)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea un grafico a dispersione (scatter plot) con Matplotlib usando dati casuali.
+                    <br><strong>Obiettivo:</strong> imparare a creare grafici a dispersione con Matplotlib.
+                </div>
+                <div id="solution-45" class="solution">
+                    <pre>import matplotlib.pyplot as plt
+import numpy as np
+
+# Dati casuali
+x = np.random.rand(50)
+y = np.random.rand(50)
+
+# Crea grafico a dispersione
+plt.scatter(x, y, color='red', alpha=0.5)
+plt.title('Grafico a Dispersione')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.show()</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 046 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 046</span>
+                    <span class="exercise-title">Istogramma con Matplotlib</span>
+                    <button class="solution-btn" onclick="toggleSolution(46)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea un istogramma con Matplotlib usando dati distribuiti normalmente.
+                    <br><strong>Obiettivo:</strong> imparare a creare istogrammi con Matplotlib.
+                </div>
+                <div id="solution-46" class="solution">
+                    <pre>import matplotlib.pyplot as plt
+import numpy as np
+
+# Dati distribuiti normalmente
+dati = np.random.normal(0, 1, 1000)
+
+# Crea istogramma
+plt.hist(dati, bins=30, color='green', alpha=0.7)
+plt.title('Istogramma di Dati Normali')
+plt.xlabel('Valore')
+plt.ylabel('Frequenza')
+plt.show()</pre>
+                </div>
+            </div>
+
+            <!-- Esercizio 047 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 047</span>
+                    <span class="exercise-title">Grafico a Torta con Matplotlib</span>
+                    <button class="solution-btn" onclick="toggleSolution(47)">Soluzione</button>
+                </div>
+                <div class="exercise-description">
+                    Crea un grafico a torta con Matplotlib per mostrare la distribuzione di preferenze.
+                    <br><strong>Obiettivo:</strong> imparare a creare grafici a torta con Matplotlib.
+                </div>
+                <div id="solution-47" class="solution">
+                    <pre>import matplotlib.pyplot as plt
+
+# Dati di esempio
+etichette = ['Opzione A', 'Opzione B', 'Opzione C', 'Opzione D']
+dimensioni = [15, 30, 45, 10]
+colori = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
+
+# Crea grafico a torta
+plt.pie(dimensioni, labels=etichette, colors=colori, autopct='%1.1f%%', startangle=140)
+plt.title('Distribuzione delle Preferenze')
+plt.axis('equal')  # Assicura che il grafico sia circolare
+plt.show()</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <h2>🎓 Inizia il tuo percorso!</h2>
+            <p>Con Moussa imparerai Python in modo semplice, efficace e divertente.</p>
+            <p>Continua a praticare ogni giorno!</p>
+        </div>
+
+        <footer>
+            <p>© 2025 Impara a programmare con Moussa | Tutti gli esercizi sono gratuiti</p>
+            <p>Happy Coding! 💻✨</p>
+        </footer>
+
+    </div>
+
+    <script>
+        let pyodide;
+        let currentLevel = 'principiante';
+
+        async function initPyodide() {
+            pyodide = await loadPyodide({
+                indexURL: "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/"
+            });
+            // Load data analytics packages
+            await pyodide.loadPackage(['numpy', 'pandas', 'matplotlib']);
+            // Set matplotlib backend for browser display
+            pyodide.runPython(`
+import matplotlib
+matplotlib.use('module://matplotlib_pyodide.html5_canvas_backend')
+            `);
+        }
+
+        initPyodide();
+
+        function copyCode(id) {
+            const code = document.getElementById('code-' + id).value;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Code copied to clipboard!');
+            });
+        }
+
+        async function runCode(id) {
+            if (!pyodide) {
+                alert('Pyodide is still loading. Please wait.');
+                return;
+            }
+            const code = document.getElementById('code-' + id).value;
+            const outputDiv = document.getElementById('output-' + id);
+            outputDiv.classList.add('show');
+            outputDiv.textContent = 'Running...';
+            try {
+                // Clear previous content
+                outputDiv.innerHTML = '';
+
+                // Mock input function to use browser prompt
+                pyodide.runPython(`
+import builtins
+import sys
+from io import StringIO
+
+def input(prompt=""):
+    from js import prompt as js_prompt
+    result = js_prompt(prompt)
+    if result is None:
+        raise EOFError("Input cancelled")
+    return result
+
+builtins.input = input
+
+old_stdout = sys.stdout
+sys.stdout = captured_output = StringIO()
+                `);
+                await pyodide.runPythonAsync(code);
+                const result = pyodide.runPython(`
+sys.stdout = old_stdout
+captured_output.getvalue()
+                `);
+
+                // Check if matplotlib was used and display plots
+                const hasMatplotlib = pyodide.runPython(`
+import sys
+'matplotlib' in sys.modules
+                `);
+
+                if (hasMatplotlib) {
+                    // Get data URLs for all figures
+                    const dataURLs = pyodide.runPython(`
+import matplotlib.pyplot as plt
+dataURLs = []
+for i in plt.get_fignums():
+    fig = plt.figure(i)
+    dataURL = fig.canvas.toDataURL()
+    dataURLs.append(dataURL)
+dataURLs
+                    `);
+
+                    if (dataURLs && dataURLs.length > 0) {
+                        dataURLs.forEach(dataURL => {
+                            const img = document.createElement('img');
+                            img.src = dataURL;
+                            img.style.maxWidth = '100%';
+                            img.style.height = 'auto';
+                            outputDiv.appendChild(img);
+                        });
+                        pyodide.runPython(`plt.close('all')`); // Close figures to free memory
+                    }
+                }
+
+                // Display text output
+                if (result) {
+                    const textOutput = document.createElement('pre');
+                    textOutput.textContent = result;
+                    textOutput.style.color = '#00ff00';
+                    textOutput.style.fontFamily = 'Courier New, monospace';
+                    textOutput.style.fontSize = '0.9em';
+                    textOutput.style.whiteSpace = 'pre-wrap';
+                    outputDiv.appendChild(textOutput);
+                } else {
+                    outputDiv.textContent = 'Code executed successfully.';
+                }
+            } catch (error) {
+                outputDiv.textContent = 'Error: ' + error.message;
+            }
+        }
+
+        function resetCode(id) {
+            const textarea = document.getElementById('code-' + id);
+            const original = textarea.getAttribute('data-original');
+            textarea.value = original;
+        }
+
+        function toggleSolution(id) {
+            const solution = document.getElementById('solution-' + id);
+            solution.classList.toggle('show');
+        }
+
+        function showLevel(level) {
+            // Hide all level sections
+            const sections = document.querySelectorAll('.level-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show the selected level section
+            const selectedSection = document.getElementById(level);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+            }
+
+            // Update active tab
+            const tabs = document.querySelectorAll('.level-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            const activeTab = document.getElementById('tab-' + level);
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+
+            if (!currentPage[level]) {
+                currentPage[level] = 1;
+            }
+            updatePagination(level);
+        }
+
+        // Search functionality
+        document.getElementById('search-input').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            const exercises = document.querySelectorAll('.level-section.active .exercise');
+            exercises.forEach(exercise => {
+                const title = exercise.querySelector('.exercise-title').textContent.toLowerCase();
+                const description = exercise.querySelector('.exercise-description').textContent.toLowerCase();
+                if (title.includes(query) || description.includes(query)) {
+                    exercise.classList.remove('hidden');
+                } else {
+                    exercise.classList.add('hidden');
+                }
+            });
+        });
+
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            const exercises = document.querySelectorAll('.exercise');
+            exercises.forEach(exercise => {
+                exercise.classList.remove('hidden');
+            });
+        }
+
+        // Pagination variables
+        const exercisesPerPage = 10;
+        const currentPage = {};
+
+        function updatePagination(level) {
+            const section = document.getElementById(level);
+            const exercises = section.querySelectorAll('.exercise');
+            const totalExercises = exercises.length;
+            const totalPages = Math.ceil(totalExercises / exercisesPerPage);
+            const page = currentPage[level] || 1;
+
+            // Hide all exercises
+            exercises.forEach(ex => ex.style.display = 'none');
+
+            // Show exercises for current page
+            const start = (page - 1) * exercisesPerPage;
+            const end = start + exercisesPerPage;
+            for (let i = start; i < end && i < totalExercises; i++) {
+                exercises[i].style.display = 'block';
+            }
+
+            // Update page info
+            const pageInfo = document.getElementById(`page-info-${level}`);
+            if (pageInfo) {
+                pageInfo.textContent = `Pagina ${page} di ${totalPages}`;
+            }
+
+            // Update button states
+            const prevBtn = document.querySelector(`#pagination-${level} .page-btn:first-child`);
+            const nextBtn = document.querySelector(`#pagination-${level} .page-btn:last-child`);
+            if (prevBtn) prevBtn.disabled = page === 1;
+            if (nextBtn) nextBtn.disabled = page === totalPages;
+        }
+
+        function changePage(level, direction) {
+            const section = document.getElementById(level);
+            const exercises = section.querySelectorAll('.exercise');
+            const totalExercises = exercises.length;
+            const totalPages = Math.ceil(totalExercises / exercisesPerPage);
+
+            if (!currentPage[level]) currentPage[level] = 1;
+            currentPage[level] += direction;
+
+            // Clamp to valid range
+            if (currentPage[level] < 1) currentPage[level] = 1;
+            if (currentPage[level] > totalPages) currentPage[level] = totalPages;
+
+            updatePagination(level);
+        }
+
+        // Transform solution pre elements to interactive editors
+        document.addEventListener('DOMContentLoaded', function() {
+            const solutions = document.querySelectorAll('.solution');
+            solutions.forEach((solution) => {
+                const pre = solution.querySelector('pre');
+                if (pre) {
+                    const id = solution.id.split('-')[1];
+                    const code = pre.textContent.trim();
+                    const editor = document.createElement('div');
+                    editor.className = 'code-editor';
+                    editor.innerHTML = `
+                        <textarea class="code-textarea" id="code-${id}">${code}</textarea>
+                        <div class="code-buttons">
+                            <button class="code-btn" onclick="copyCode(${id})">Copy</button>
+                            <button class="code-btn" onclick="runCode(${id})">Run</button>
+                            <button class="code-btn" onclick="resetCode(${id})">Reset</button>
+                        </div>
+                        <div class="code-output" id="output-${id}"></div>
+                    `;
+                    solution.innerHTML = '';
+                    solution.appendChild(editor);
+                    // Store original code
+                    const textarea = editor.querySelector('.code-textarea');
+                    textarea.setAttribute('data-original', code);
+                }
+            });
+
+            // Initialize pagination for principiante
+            currentPage['principiante'] = 1;
+            updatePagination('principiante');
+        });
+    </script>
+
+</body>
+</html>

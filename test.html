@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impara a programmare con Moussa - Esercizi Python</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1.3em;
+            font-weight: 500;
+        }
+
+        .intro {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #667eea;
+        }
+
+        .intro p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+            color: #4a5568;
+        }
+
+        .navigation {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .level-section {
+            margin-bottom: 50px;
+        }
+
+        .level-header {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .level-icon {
+            font-size: 2.5em;
+        }
+
+        .level-title {
+            font-size: 2em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .exercise {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .exercise:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+            border-color: #667eea;
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .exercise-info {
+            flex: 1;
+        }
+
+        .exercise-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85em;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .exercise-title {
+            color: #2d3748;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .exercise-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .solution-btn, .copy-btn, .run-btn {
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .solution-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .solution-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .solution-btn.active {
+            background: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%);
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(17, 153, 142, 0.5);
+        }
+
+        .copy-btn.copied {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+        }
+
+        .run-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .run-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.5);
+        }
+
+        .exercise-description {
+            color: #4a5568;
+            line-height: 1.8;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .exercise-description code {
+            background: #f7fafc;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #667eea;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        .solution {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .solution.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .code-container {
+            position: relative;
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-header {
+            background: #0f172a;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        .code-title {
+            color: #94a3b8;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .code-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .code-action-btn {
+            background: #334155;
+            color: #e2e8f0;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.2s ease;
+        }
+
+        .code-action-btn:hover {
+            background: #475569;
+        }
+
+        .code-content {
+            padding: 20px;
+            font-family: 'Courier New', Consolas, Monaco, monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            color: #e2e8f0;
+            font-size: 0.95em;
+            line-height: 1.6;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .output-container {
+            background: #0f172a;
+            border-radius: 10px;
+            margin-top: 15px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .output-container.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .output-header {
+            background: #1e293b;
+            padding: 10px 20px;
+            color: #94a3b8;
+            font-size: 0.85em;
+            font-weight: 600;
+            border-bottom: 1px solid #334155;
+        }
+
+        .output-content {
+            padding: 15px 20px;
+            font-family: 'Courier New', Consolas, Monaco, monospace;
+            color: #10b981;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .page-btn:hover, .page-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin: 8px 0;
+            font-size: 1.05em;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5em;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .subtitle {
+                font-size: 1.1em;
+            }
+
+            .exercise-header {
+                flex-direction: column;
+            }
+
+            .exercise-actions {
+                width: 100%;
+            }
+
+            .solution-btn, .copy-btn, .run-btn {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .level-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-weight: 600;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">🐍</div>
+            <h1>Impara a programmare con Moussa</h1>
+            <p class="subtitle">Esercizi di Programmazione Python</p>
+        </header>
+
+        <div class="intro">
+            <p><strong>Il miglior modo per imparare a programmare con Python velocemente è fare tanta pratica.</strong></p>
+            <p>In questa pagina troverai esercizi svolti di programmazione Python su funzioni, stringhe, liste, calcoli matematici, algoritmi ricorsivi e moduli. Gli esercizi sono suddivisi per livello: <strong>Principiante</strong>, <strong>Intermedio</strong>, <strong>OOP</strong> e <strong>Data Analytics</strong>.</p>
+            <p><strong>Buon allenamento, ed Happy Coding! 🚀</strong></p>
+        </div>
+
+        <div class="navigation">
+            <div class="nav-buttons">
+                <a href="#principiante" class="nav-btn">📚 Principiante</a>
+                <a href="#intermedio" class="nav-btn">🚀 Intermedio</a>
+                <a href="#oop" class="nav-btn">🎯 OOP</a>
+                <a href="#data-analytics" class="nav-btn">📊 Data Analytics</a>
+            </div>
+        </div>
+
+        <!-- SEZIONE PRINCIPIANTE -->
+        <div id="principiante" class="level-section">
+            <div class="level-header">
+                <span class="level-icon">📚</span>
+                <h2 class="level-title">Livello Principiante</h2>
+            </div>
+
+            <!-- Esercizio 001 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-info">
+                        <span class="exercise-number">Esercizio 001</span>
+                        <span class="exercise-title">Max tra Due Numeri</span>
+                    </div>
+                    <div class="exercise-actions">
+                        <button class="solution-btn" onclick="toggleSolution(1)">
+                            <span>👁️</span> Mostra Soluzione
+                        </button>
+                    </div>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che chieda due numeri all'utente tramite la funzione <code>input()</code> e mostri il più grande tra i due utilizzando la funzione <code>print()</code>. Usa le istruzioni <code>if, elif ed else</code> per la scrittura dell'algoritmo.
+                </div>
+                <div class="solution" id="solution-1">
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-title">💻 Soluzione Python</span>
+                            <div class="code-actions">
+                                <button class="code-action-btn" onclick="copyCode(1)">📋 Copia</button>
+                                <button class="code-action-btn" onclick="runCode(1)">▶️ Esegui</button>
+                            </div>
+                        </div>
+                        <div class="code-content" id="code-1">num1 = int(input("Inserisci il primo numero: "))
+num2 = int(input("Inserisci il secondo numero: "))
+
+if num1 > num2:
+    print(f"Il numero più grande è: {num1}")
+elif num2 > num1:
+    print(f"Il numero più grande è: {num2}")
+else:
+    print("I due numeri sono uguali!")</div>
+                    </div>
+                    <div class="output-container" id="output-1">
+                        <div class="output-header">📤 Output</div>
+                        <div class="output-content">Esempio: Se inserisci 5 e 10, l'output sarà "Il numero più grande è: 10"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 002 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-info">
+                        <span class="exercise-number">Esercizio 002</span>
+                        <span class="exercise-title">Max tra Tre Numeri</span>
+                    </div>
+                    <div class="exercise-actions">
+                        <button class="solution-btn" onclick="toggleSolution(2)">
+                            <span>👁️</span> Mostra Soluzione
+                        </button>
+                    </div>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che chieda tre numeri a, b, c all'utente e mostri il più grande tra loro.
+                </div>
+                <div class="solution" id="solution-2">
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-title">💻 Soluzione Python</span>
+                            <div class="code-actions">
+                                <button class="code-action-btn" onclick="copyCode(2)">📋 Copia</button>
+                                <button class="code-action-btn" onclick="runCode(2)">▶️ Esegui</button>
+                            </div>
+                        </div>
+                        <div class="code-content" id="code-2">a = int(input("Inserisci il primo numero: "))
+b = int(input("Inserisci il secondo numero: "))
+c = int(input("Inserisci il terzo numero: "))
+
+massimo = a
+if b > massimo:
+    massimo = b
+if c > massimo:
+    massimo = c
+
+print(f"Il numero più grande è: {massimo}")</div>
+                    </div>
+                    <div class="output-container" id="output-2">
+                        <div class="output-header">📤 Output</div>
+                        <div class="output-content">Esempio: Se inserisci 5, 12 e 8, l'output sarà "Il numero più grande è: 12"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 003 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-info">
+                        <span class="exercise-number">Esercizio 003</span>
+                        <span class="exercise-title">Sei una Vocale?</span>
+                    </div>
+                    <div class="exercise-actions">
+                        <button class="solution-btn" onclick="toggleSolution(3)">
+                            <span>👁️</span> Mostra Soluzione
+                        </button>
+                    </div>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che chieda all'utente una stringa composta da un solo carattere e dica se si tratta di una vocale oppure no.
+                </div>
+                <div class="solution" id="solution-3">
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-title">💻 Soluzione Python</span>
+                            <div class="code-actions">
+                                <button class="code-action-btn" onclick="copyCode(3)">📋 Copia</button>
+                                <button class="code-action-btn" onclick="runCode(3)">▶️ Esegui</button>
+                            </div>
+                        </div>
+                        <div class="code-content" id="code-3">carattere = input("Inserisci un carattere: ").lower()
+vocali = ['a', 'e', 'i', 'o', 'u']
+
+if carattere in vocali:
+    print(f"'{carattere}' è una vocale!")
+else:
+    print(f"'{carattere}' non è una vocale.")</div>
+                    </div>
+                    <div class="output-container" id="output-3">
+                        <div class="output-header">📤 Output</div>
+                        <div class="output-content">Esempio: Se inserisci 'a', l'output sarà "'a' è una vocale!"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 004 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-info">
+                        <span class="exercise-number">Esercizio 004</span>
+                        <span class="exercise-title">Somma Lista</span>
+                    </div>
+                    <div class="exercise-actions">
+                        <button class="solution-btn" onclick="toggleSolution(4)">
+                            <span>👁️</span> Mostra Soluzione
+                        </button>
+                    </div>
+                </div>
+                <div class="exercise-description">
+                    Scrivi un programma che, data una lista di numeri, sommi tra loro tutti gli elementi.
+                </div>
+                <div class="solution" id="solution-4">
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-title">💻 Soluzione Python</span>
+                            <div class="code-actions">
+                                <button class="code-action-btn" onclick="copyCode(4)">📋 Copia</button>
+                                <button class="code-action-btn" onclick="runCode(4)">▶️ Esegui</button>
+                            </div>
+                        </div>
+                        <div class="code-content" id="code-4">def somma_lista(lista):
+    totale = 0
+    for numero in lista:
+        totale += numero
+    return totale
+
+numeri = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+risultato = somma_lista(numeri)
+print(f"La somma degli elementi è: {risultato}")</div>
+                    </div>
+                    <div class="output-container" id="output-4">
+                        <div class="output-header">📤 Output</div>
+                        <div class="output-content">La somma degli elementi è: 55</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 005 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-info">
+                        <span class="exercise-number">Esercizio 005</span>
+                        <span class="exercise-title">Generatore di Istogrammi</span>
+                    </div>
+                    <div class="exercise-actions">
+                        <button class="solution-btn" onclick="toggleSolution(5)">
+                            <span>👁️</span> Mostra Soluzione
+                        </button>
+                    </div>
+                </div>
+                <div class="exercise-description">
+                    Scrivi una funzione che, data una lista di numeri, fornisca in output un istogramma usando asterischi.
+                </div>
+                <div class="solution" id="solution-5">
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-title">💻 Soluzione Python</span>
+                            <div class="code-actions">
+                                <button class="code-action-btn" onclick="copyCode(5)">📋 Copia</button>
+                                <button class="code-action-btn" onclick="runCode(5)">▶️ Esegui</button>
+                            </div>
+                        </div>
+                        <div class="code-content" id="code-5">def genera_istogramma(lista):
+    for numero in lista:
+        print('*' * numero)
+
+numeri = [3, 7, 9, 5]
+genera_istogramma(numeri)</div>
+                    </div>
+                    <div class="output-container" id="output-5">
+                        <div class="output-header">📤 Output</div>
+                        <div class="output-content">***
+*******
+*********
+*****</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination for Principiante -->
+            <div class="pagination">
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">...</button>
+                <button class="page-btn">10</button>
+            </div>
+        </div>
+
+        <!-- SEZIONE INTERMEDIO -->
+        <div id="intermedio" class="level-section">
+            <div class="level-header">
+                <span class="level-icon">🚀</span>
+                <h2 class="level-title">Livello Intermedio</h2>
+            </div>
+
+            <!-- Esercizio 001 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-info">
+                        <span class="exercise-number">Esercizio 001</span>
+                        <span class="exercise-title">Reverser</span>
+                    </div>
+                    <div class="exercise-actions">
+                        <button class="solution-btn" onclick="toggleSolution(101)">
+                            <span>👁️</span> Mostra Soluzione
+                        </button>
+                    </div>
+                </div>
+                <div class="exercise-description">
+                    Scrivi una funzione che inverta una stringa. Ad esempio "abcd" diventerà "dcba".
+                </div>
+                <div class="solution" id="solution-101">
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-title">💻 Soluzione Python</span>
+                            <div class="code-actions">
+                                <button class="code-action-btn" onclick="copyCode(101)">📋 Copia</button>
+                                <button class="code-action-btn" onclick="runCode(101)">▶️ Esegui</button>
+                            </div>
+                        </div>
+                        <div class="code-content" id="code-101">def inverti_stringa(testo):
+    return testo[::-1]
+
+stringa = "abcd"
+risultato = inverti_stringa(stringa)
+print(f"Stringa originale: {stringa}")
+print(f"Stringa invertita: {risultato}")</div>
+                    </div>
+                    <div class="output-container" id="output-101">
+                        <div class="output-header">📤 Output</div>
+                        <div class="output-content">Stringa originale: abcd
+Stringa invertita: dcba</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 002 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <div class="exercise-info">
+                        <span class="exercise-number">Esercizio 002</span>
+                        <span class="exercise-title">Palindromo Checker</span>
+                    </div>
+                    <div class="exercise-actions">
+                        <button class="solution-btn" onclick="toggleSolution(102)">
+                            <span>👁️</span> Mostra Soluzione
+                        </button>
+                    </div>
+                </div>
+                <div class="exercise-description">
+                    Scrivi una funzione che riconosce se una parola è un palindromo (si legge uguale anche al contrario).
+                </div>
+                <div class="solution" id="solution-102">
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span class="code-title">💻 Soluzione Python</span>
+                            <div class="code-actions">
+                                <button class="code-action-btn" onclick="copyCode(102)">📋 Copia</button>
+                                <button class="code-action-btn" onclick="runCode(102)">▶️ Esegui</button>
+                            </div>
+                        </div>
+                        <div class="code-content" id="code-102">def e_palindromo(parola):
+    parola = parola.lower().replace(" ", "")
+    return parola == parola[::-1]
+
+# Test
+test_parole = ["anna", "radar", "python", "osso"]
+for parola in test_parole:
+    if e_palindromo(parola):
+        print(f"'{parola}' è un palindromo!")
+    else:
+        print(f"'{parola}' non è un palindromo.")</div>
+                    </div>
+                    <div class="output-container" id="output-102">
+                        <div class="output-header">📤 Output</div>
+                        <div class="output-content">'anna' è un palindromo!
+'radar' è un palindromo!
+'python' non è un palindromo.
+'osso
